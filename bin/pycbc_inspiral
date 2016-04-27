@@ -236,6 +236,12 @@ with ctx:
                                    gpu_callback_method=opt.gpu_callback_method,
                                    cluster_function=opt.cluster_function)
 
+    # Debugging statements:
+    print " type(matched_filter.ifft) = {0}".format( type(matched_filter.ifft) )
+    print " fft.backend_mkl._alist = {0}; fft.backend_mkl._adict = {1}".format( fft.backend_mkl._adict,
+                                                                                fft.backend_mkl._alist)
+    print " fft.class_api.get_backend() = {0}".format( fft.class_api.get_backend() )
+
     bank_chisq = vetoes.SingleDetBankVeto(opt.bank_veto_bank_file,
                                           flen, delta_f, flow, complex64,
                                           phase_order=opt.order,

@@ -403,17 +403,17 @@ class EventManager(object):
         self.ntemplates = ntemplates
         self.write_performance = True
 
-    def write_events(self, outname):
+    def write_events(self, outname, debug=None):
         """ Write the found events to a sngl inspiral table
         """
         self.make_output_dir(outname)
 
         if '.hdf' in outname:
-            self.write_to_hdf(outname)
+            self.write_to_hdf(outname, debug=debug)
         else:
             raise ValueError('Cannot write to this format')
 
-    def write_to_hdf(self, outname):
+    def write_to_hdf(self, outname, debug=None):
         class fw(object):
             def __init__(self, name, prefix):
                 import h5py
@@ -511,6 +511,21 @@ class EventManager(object):
             f['search/setup_time_fraction'] = \
                 numpy.array([float(self.setup_time) / float(self.run_time)])
             f['search/run_time'] = numpy.array([float(self.run_time)])
+
+        if debug is not None:
+            dkeys = debug.keys()
+            ndebug = len(debug[dkeys[0]])
+            for i in range(ndebug):
+                for key in dkeys:
+                    ddata = debug[key][i]
+                    # We'll convert scalars to 1D single-element arrays;
+                    # otherwise, we assume it "just works" to hand h5py
+                    # the data
+                    if numpy.isscalar(ddata):
+                        f['debug/'+str(i)+'/'+key] = numpy.array([ddata])
+                    else:
+                        f['debug/'+str(i)+'/'+key] = ddata
+            f.f[f.prefix+"/debug"].attrs['filename'] = outname
 
         if 'q_trans' in self.global_params:
             qtrans = self.global_params['q_trans']

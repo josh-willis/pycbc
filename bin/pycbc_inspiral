@@ -321,6 +321,19 @@ with ctx:
     # within the loop.  Rather, the iteration simply fills the memory specifed in
     # the 'template_mem' argument to MatchedFilterControl with the next template
     # from the bank.
+
+
+    debug_info = {'htilde':[],
+                  'stilde':[],
+                  'snr':[],
+                  'norm':[],
+                  'psd':[],
+                  'corr':[],
+                  'chisq':[],
+                  'chisq_dof':[],
+                  'template_hash':[] }
+    ncs_cnt = 0
+
     for t_num in xrange(len(bank)):
         tmplt_generated = False
        
@@ -366,6 +379,20 @@ with ctx:
             out_vals['chisq'], out_vals['chisq_dof'] = \
                   power_chisq.values(corr, snrv, norm, stilde.psd,
                                      idx+stilde.analyze.start, template)
+
+            neg_cs_idx = out_vals['chisq'][:] <= 0.0
+            neg_cs = out_vals['chisq'][:][neg_cs_idx]
+            if (len(neg_cs) > 0):
+                ncs_cnt += 1
+                debug_info['htilde'].append( template_mem.numpy().copy() )
+                debug_info['stilde'].append( stilde.numpy().copy() )
+                debug_info['snr'].append( snr.numpy().copy() )
+                debug_info['norm'].append( norm )
+                debug_info['psd'].append( stilde.psd.numpy().copy() )
+                debug_info['corr'].append( corr.numpy().copy() )
+                debug_info['chisq'].append( out_vals['chisq'].copy() )
+                debug_info['chisq_dof'].append( out_vals['chisq_dof'].copy() )
+                debug_info['template_hash'].append( template.params.template_hash )
 
             out_vals['sg_chisq'] = sg_chisq.values(stilde, template, stilde.psd,
                                           snrv, norm,
@@ -425,7 +452,10 @@ run_time = tstop - tstart
 event_mgr.save_performance(ncores, nfilters, ntemplates, run_time, tsetup)
 
 logging.info("Writing out triggers")
-event_mgr.write_events(opt.output)
+if ncs_cnt > 0:
+    event_mgr.write_events(opt.output, debug=debug_info)
+else:
+    event_mgr.write_events(opt.output)
 
 if opt.fftw_output_float_wisdom_file:
     fft.fftw.export_single_wisdom_to_filename(opt.fftw_output_float_wisdom_file)

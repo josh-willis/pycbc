@@ -331,6 +331,7 @@ with ctx:
                   'corr':[],
                   'chisq':[],
                   'chisq_dof':[],
+                  'shift_sum':[],
                   'template_hash':[] }
     ncs_cnt = 0
 
@@ -379,7 +380,7 @@ with ctx:
                   bank_chisq.values(template, stilde.psd, stilde, snrv, norm,
                                     idx+stilde.analyze.start)
 
-            out_vals['chisq'], out_vals['chisq_dof'] = \
+            out_vals['chisq'], out_vals['chisq_dof'], shift_sum = \
                   power_chisq.values(corr, snrv, norm, stilde.psd,
                                      idx+stilde.analyze.start, template)
 
@@ -396,6 +397,7 @@ with ctx:
                 debug_info['chisq'].append( out_vals['chisq'].copy() )
                 debug_info['chisq_dof'].append( out_vals['chisq_dof'].copy() )
                 debug_info['template_hash'].append( template.params.template_hash )
+                debug_info['shift_sum'].append( numpy.array(shift_sum) )
                 continue_bank = False
 
             out_vals['sg_chisq'] = sg_chisq.values(stilde, template, stilde.psd,

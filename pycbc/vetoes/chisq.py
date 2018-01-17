@@ -129,7 +129,7 @@ def power_chisq_at_points_from_precomputed(corr, snr, snr_norm, bins, indices):
     """
     num_bins = len(bins) - 1
     chisq = shift_sum(corr, indices, bins) # pylint:disable=assignment-from-no-return
-    return (chisq * num_bins - (snr.conj() * snr).real) * (snr_norm ** 2.0)
+    return (chisq * num_bins - (snr.conj() * snr).real) * (snr_norm ** 2.0), chisq
 
 _q_l = None
 _qtilde_l = None
@@ -370,7 +370,7 @@ class SingleDetPowerChisq(object):
             if num_above > 0:
                 bins = self.cached_chisq_bins(template, psd)
                 dof = (len(bins) - 1) * 2 - 2
-                chisq = power_chisq_at_points_from_precomputed(corr,
+                chisq, shift_sum = power_chisq_at_points_from_precomputed(corr,
                                      above_snrv, snr_norm, bins, above_indices)
 
             if self.snr_threshold:
@@ -379,9 +379,9 @@ class SingleDetPowerChisq(object):
             else:
                 rchisq = chisq
 
-            return rchisq, numpy.repeat(dof, len(indices))# dof * numpy.ones_like(indices)
+            return rchisq, numpy.repeat(dof, len(indices)), shift_sum# dof * numpy.ones_like(indices)
         else:
-            return None, None
+            return None, None, None
 
 class SingleDetSkyMaxPowerChisq(SingleDetPowerChisq):
     """Class that handles precomputation and memory management for efficiently

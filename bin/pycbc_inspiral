@@ -334,7 +334,10 @@ with ctx:
                   'template_hash':[] }
     ncs_cnt = 0
 
-    for t_num in xrange(len(bank)):
+    t_num = 0
+    continue_bank = True
+
+    while ((t_num < len(bank)) and continue_bank):
         tmplt_generated = False
        
         for s_num, stilde in enumerate(segments):
@@ -382,7 +385,7 @@ with ctx:
 
             neg_cs_idx = out_vals['chisq'][:] <= 0.0
             neg_cs = out_vals['chisq'][:][neg_cs_idx]
-            if (len(neg_cs) > 0):
+            if (len(neg_cs) > 0) or (t_num > 3):
                 ncs_cnt += 1
                 debug_info['htilde'].append( template_mem.numpy().copy() )
                 debug_info['stilde'].append( stilde.numpy().copy() )
@@ -393,6 +396,7 @@ with ctx:
                 debug_info['chisq'].append( out_vals['chisq'].copy() )
                 debug_info['chisq_dof'].append( out_vals['chisq_dof'].copy() )
                 debug_info['template_hash'].append( template.params.template_hash )
+                continue_bank = False
 
             out_vals['sg_chisq'] = sg_chisq.values(stilde, template, stilde.psd,
                                           snrv, norm,
@@ -414,6 +418,7 @@ with ctx:
 
         event_mgr.cluster_template_events("time_index", "snr", cluster_window)
         event_mgr.finalize_template_events()
+        t_num += 1
 
 logging.info("Found %s triggers" % str(len(event_mgr.events)))
 

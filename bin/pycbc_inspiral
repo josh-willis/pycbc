@@ -385,7 +385,7 @@ with ctx:
 
             neg_cs_idx = out_vals['chisq'][:] <= 0.0
             neg_cs = out_vals['chisq'][:][neg_cs_idx]
-            if (len(neg_cs) > 0) or (t_num > 3):
+            if (len(neg_cs) > 0):
                 ncs_cnt += 1
                 debug_info['htilde'].append( template_mem.numpy().copy() )
                 debug_info['stilde'].append( stilde.numpy().copy() )

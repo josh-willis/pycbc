@@ -401,7 +401,7 @@ with ctx:
                 debug_info['template_hash'].append( template.params.template_hash )
                 debug_info['shift_sum'].append( numpy.array(shift_sum) )
                 debug_info['snrv'].append( snrv.copy() )
-                debug_info['idx'].append( idx.copy() )
+                debug_info['idx'].append( idx.copy() + stilde.analyze.start )
                 continue_bank = False
 
             out_vals['sg_chisq'] = sg_chisq.values(stilde, template, stilde.psd,

@@ -332,7 +332,9 @@ with ctx:
                   'chisq':[],
                   'chisq_dof':[],
                   'shift_sum':[],
-                  'template_hash':[] }
+                  'template_hash':[],
+                  'snrv':[],
+                  'idx':[]}
     ncs_cnt = 0
 
     t_num = 0
@@ -398,6 +400,8 @@ with ctx:
                 debug_info['chisq_dof'].append( out_vals['chisq_dof'].copy() )
                 debug_info['template_hash'].append( template.params.template_hash )
                 debug_info['shift_sum'].append( numpy.array(shift_sum) )
+                debug_info['snrv'].append( snrv.copy() )
+                debug_info['idx'].append( idx.copy() )
                 continue_bank = False
 
             out_vals['sg_chisq'] = sg_chisq.values(stilde, template, stilde.psd,

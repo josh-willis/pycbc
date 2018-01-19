@@ -95,7 +95,7 @@ for filename in args.trigger_files:
     if 'run_time' in ifo_data['search'].keys():
         rtime = numpy.append(rtime, ifo_data['search/run_time'][:])
     if 'debug' in ifo_data.keys():
-        debug_files.append(ifo_data['debug'].attrs['filename'])
+        debug_filenames.append(ifo_data['debug'].attrs['filename'])
 
     if 'gating' in ifo_data:
         gating_keys = []

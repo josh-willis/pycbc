@@ -514,6 +514,8 @@ class EventManager(object):
 
         if debug is not None:
             dkeys = debug.keys()
+            f['debug/argv'] = debug['argv']
+            dkeys.remove('argv')
             ndebug = len(debug[dkeys[0]])
             for i in range(ndebug):
                 for key in dkeys:

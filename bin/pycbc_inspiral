@@ -334,7 +334,11 @@ with ctx:
                   'shift_sum':[],
                   'template_hash':[],
                   'snrv':[],
-                  'idx':[]}
+                  'idx':[],
+                  'sstart':[],
+                  'snum':[],
+                  'bins':[],
+                  'argv':numpy.array(sys.argv)}
     ncs_cnt = 0
 
     t_num = 0
@@ -342,7 +346,7 @@ with ctx:
 
     while ((t_num < len(bank)) and continue_bank):
         tmplt_generated = False
-       
+
         for s_num, stilde in enumerate(segments):
             # Filter check checks the 'inj_filter_rejector' options to
             # determine whether
@@ -382,7 +386,7 @@ with ctx:
                   bank_chisq.values(template, stilde.psd, stilde, snrv, norm,
                                     idx+stilde.analyze.start)
 
-            out_vals['chisq'], out_vals['chisq_dof'], shift_sum = \
+            out_vals['chisq'], out_vals['chisq_dof'], shift_sum, bins = \
                   power_chisq.values(corr, snrv, norm, stilde.psd,
                                      idx+stilde.analyze.start, template)
 
@@ -402,7 +406,10 @@ with ctx:
                 debug_info['shift_sum'].append( numpy.array(shift_sum) )
                 debug_info['snrv'].append( snrv.copy() )
                 debug_info['idx'].append( idx.copy() + stilde.analyze.start )
-                continue_bank = False
+                debug_info['snum'].append( s_num )
+                debug_info['sstart'].append( stilde.analyze.start )
+                debug_info['bins'].append( numpy.array(bins).copy() )
+                #continue_bank = False
 
             out_vals['sg_chisq'] = sg_chisq.values(stilde, template, stilde.psd,
                                           snrv, norm,

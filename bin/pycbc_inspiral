@@ -342,8 +342,10 @@ with ctx:
                   'bins':[],
                   'argv':numpy.array(sys.argv),
                   'host':numpy.array([gethostname()]),
-                  'device_num':numpy.array([numpy.int64(opt.processing_device_id)]),
-                  'device_name':numpy.array([ctx.device.name()])}
+                  'device_num':numpy.array([numpy.int64(opt.processing_device_id)])}
+
+    if hasattr(ctx, 'device'):
+        debug_info.update( {'device_name':numpy.array([ctx.device.name()])} )
     ncs_cnt = 0
 
     t_num = 0

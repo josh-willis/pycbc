@@ -30,6 +30,8 @@ import pycbc.weave
 import pycbc.inject
 import time
 
+from socket import gethostname
+
 last_progress_update = -1.0
 
 def update_progress(p,u,n):
@@ -338,7 +340,10 @@ with ctx:
                   'sstart':[],
                   'snum':[],
                   'bins':[],
-                  'argv':numpy.array(sys.argv)}
+                  'argv':numpy.array(sys.argv),
+                  'host':numpy.array([gethostname()]),
+                  'device_num':numpy.array([numpy.int64(opt.processing_device_id)]),
+                  'device_name':numpy.array([ctx.device.name()])}
     ncs_cnt = 0
 
     t_num = 0
@@ -409,7 +414,7 @@ with ctx:
                 debug_info['snum'].append( s_num )
                 debug_info['sstart'].append( stilde.analyze.start )
                 debug_info['bins'].append( numpy.array(bins).copy() )
-                #continue_bank = False
+                continue_bank = False
 
             out_vals['sg_chisq'] = sg_chisq.values(stilde, template, stilde.psd,
                                           snrv, norm,

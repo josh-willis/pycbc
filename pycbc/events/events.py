@@ -516,6 +516,12 @@ class EventManager(object):
             dkeys = debug.keys()
             f['debug/argv'] = debug['argv']
             dkeys.remove('argv')
+            f['debug/host'] = debug['host']
+            dkeys.remove('host')
+            f['debug/device_num'] = debug['device_num']
+            dkeys.remove('device_num')
+            f['debug/device_name'] = debug['device_name']
+            dkeys.remove('device_name')
             ndebug = len(debug[dkeys[0]])
             for i in range(ndebug):
                 for key in dkeys:

@@ -260,15 +260,14 @@ class MatchedFilterControl(object):
         self.correlators[segnum].correlate()
         self.ifft.execute()
         snrv, idx = self.threshold_and_clusterers[segnum].threshold_and_cluster(self.snr_threshold / norm, window)
-
-        if len(idx) == 0:
-            return snr, norm, corr, [], []
-
         logging.info("%s points above threshold" % str(len(idx)))
 
         snr = TimeSeries(self.snr_mem, epoch=epoch, delta_t=self.delta_t, copy=False)
         corr = FrequencySeries(self.corr_mem, delta_f=self.delta_f, copy=False)
-        return snr, norm, corr, idx, snrv
+        if len(idx) == 0:
+            return snr, norm, corr, [], []
+        else:
+            return snr, norm, corr, idx, snrv
 
     def full_matched_filter_and_cluster_fc(self, segnum, template_norm, window, epoch=None):
         """ Returns the complex snr timeseries, normalization of the complex snr,

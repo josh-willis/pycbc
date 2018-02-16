@@ -416,7 +416,7 @@ with ctx:
                 debug_info['snum'].append( s_num )
                 debug_info['sstart'].append( stilde.analyze.start )
                 debug_info['bins'].append( numpy.array(bins).copy() )
-                continue_bank = False
+                #continue_bank = False
 
             out_vals['sg_chisq'] = sg_chisq.values(stilde, template, stilde.psd,
                                           snrv, norm,

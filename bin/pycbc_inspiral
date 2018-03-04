@@ -445,7 +445,7 @@ with ctx:
             h = hpy()
             print "\n\nPython objgraph at template {0}:\n".format(t_num)
             objgraph.show_most_common_types(limit=50)
-            print h.byrcs
+            print h.heap().byrcs
 
 logging.info("Found %s triggers" % str(len(event_mgr.events)))
 

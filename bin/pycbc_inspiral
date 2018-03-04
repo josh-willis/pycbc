@@ -31,6 +31,7 @@ import pycbc.inject
 import time
 
 from socket import gethostname
+from guppy import hpy
 
 last_progress_update = -1.0
 
@@ -439,6 +440,10 @@ with ctx:
         event_mgr.cluster_template_events("time_index", "snr", cluster_window)
         event_mgr.finalize_template_events()
         t_num += 1
+        if ((t_num % 5000) == 0):
+            h = hpy()
+            print "Python heap at template {0}:\n\n".format(t_num)
+            print h.heap()
 
 logging.info("Found %s triggers" % str(len(event_mgr.events)))
 

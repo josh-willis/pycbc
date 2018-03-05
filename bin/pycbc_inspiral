@@ -451,7 +451,7 @@ with ctx:
             h = hpy()
             print "\n\nPython objgraph at template {0}:\n".format(t_num)
             tr.print_diff()
-            #objgraph.show_most_common_types(limit=50)
+            objgraph.show_growth()
             #print h.heap().byrcs
             #print gc.get_count()
             #print gc.collect()

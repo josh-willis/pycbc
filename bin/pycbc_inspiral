@@ -361,8 +361,10 @@ with ctx:
     continue_bank = True
 
     tr.print_diff()
-    objgraph.show_growth()
+    objgraph.show_growth(limit=10)
     print resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    _ = objgraph.get_new_ids(limit=0)
+    _ = objgraph.get_new_ids(limit=0)
 
     while ((t_num < len(bank)) and continue_bank):
         tmplt_generated = False
@@ -458,6 +460,12 @@ with ctx:
             tr.print_diff()
             objgraph.show_growth()
             print resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+            new_ids = objgraph.get_new_ids()
+            new_devices = objgraph.at_addrs(new_ids['Device'])
+            print "Number of new 'Device' objets: {0}".format( len(new_devices) )
+            roots = objgraph.get_leaking_objects()
+            if len(roots) > 0:
+                objgraph.show_most_common_types(objects=roots)
             #print h.heap().byrcs
             #print gc.get_count()
             #print gc.collect()

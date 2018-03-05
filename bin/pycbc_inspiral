@@ -35,6 +35,7 @@ from guppy import hpy
 import objgraph
 import gc, pprint
 from pympler import tracker
+import resource
 
 #gc.set_debug(gc.DEBUG_SAVEALL)
 tr = tracker.SummaryTracker()
@@ -359,6 +360,10 @@ with ctx:
     t_num = 0
     continue_bank = True
 
+    tr.print_diff()
+    objgraph.show_growth()
+    print resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+
     while ((t_num < len(bank)) and continue_bank):
         tmplt_generated = False
 
@@ -452,6 +457,7 @@ with ctx:
             print "\n\nPython objgraph at template {0}:\n".format(t_num)
             tr.print_diff()
             objgraph.show_growth()
+            print resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
             #print h.heap().byrcs
             #print gc.get_count()
             #print gc.collect()

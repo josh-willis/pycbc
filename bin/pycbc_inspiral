@@ -33,6 +33,12 @@ import time
 from socket import gethostname
 from guppy import hpy
 import objgraph
+import gc, pprint
+from pympler import tracker
+
+#gc.set_debug(gc.DEBUG_SAVEALL)
+tr = tracker.SummaryTracker()
+tr.print_diff()
 
 last_progress_update = -1.0
 
@@ -444,8 +450,11 @@ with ctx:
         if ((t_num % 5000) == 0):
             h = hpy()
             print "\n\nPython objgraph at template {0}:\n".format(t_num)
-            objgraph.show_most_common_types(limit=50)
-            print h.heap().byrcs
+            tr.print_diff()
+            #objgraph.show_most_common_types(limit=50)
+            #print h.heap().byrcs
+            #print gc.get_count()
+            #print gc.collect()
 
 logging.info("Found %s triggers" % str(len(event_mgr.events)))
 

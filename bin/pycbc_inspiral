@@ -32,15 +32,15 @@ import time
 
 from socket import gethostname
 #from guppy import hpy
-import objgraph
+#import objgraph
 #import gc, pprint
-from pympler import tracker
-import resource
+#from pympler import tracker
+#import resource
 #import random
 
 #gc.set_debug(gc.DEBUG_SAVEALL)
-tr = tracker.SummaryTracker()
-tr.print_diff()
+#tr = tracker.SummaryTracker()
+#tr.print_diff()
 
 last_progress_update = -1.0
 
@@ -361,11 +361,11 @@ with ctx:
     t_num = 0
     continue_bank = True
 
-    tr.print_diff()
-    objgraph.show_growth(limit=10)
-    print resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-    _ = objgraph.get_new_ids(limit=0)
-    _ = objgraph.get_new_ids(limit=0)
+    #tr.print_diff()
+    #objgraph.show_growth(limit=10)
+    print "About to enter filtering loop"
+    #_ = objgraph.get_new_ids(limit=0)
+    #_ = objgraph.get_new_ids(limit=0)
 
     while ((t_num < len(bank)) and continue_bank):
         tmplt_generated = False
@@ -457,19 +457,19 @@ with ctx:
         t_num += 1
         if ((t_num % 5000) == 0):
             #h = hpy()
-            print "\n\nPython objgraph at template {0}:\n".format(t_num)
-            tr.print_diff()
-            objgraph.show_growth()
-            print resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-            new_ids = objgraph.get_new_ids()
-            new_devices = objgraph.at_addrs(new_ids['Device'])
-            print "Number of new 'Device' objets: {0}".format( len(new_devices) )
-            loopid = int(t_num/5000.0)
-            objgraph.show_backrefs(new_devices, filename='devices-backrefs-{0}.png'.format(loopid))
-            roots = objgraph.get_leaking_objects()
-            if len(roots) > 0:
-                objgraph.show_most_common_types(objects=roots)
-                del roots
+            print "\nJust filtered template {0}:\n".format(t_num)
+            #tr.print_diff()
+            #objgraph.show_growth()
+            #print resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+            #new_ids = objgraph.get_new_ids()
+            #new_devices = objgraph.at_addrs(new_ids['Device'])
+            #print "Number of new 'Device' objets: {0}".format( len(new_devices) )
+            #loopid = int(t_num/5000.0)
+            #objgraph.show_backrefs(new_devices, filename='devices-backrefs-{0}.png'.format(loopid))
+            #roots = objgraph.get_leaking_objects()
+            #if len(roots) > 0:
+            #    objgraph.show_most_common_types(objects=roots)
+            #    del roots
             #print h.heap().byrcs
             #print gc.get_count()
             #print gc.collect()

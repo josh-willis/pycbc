@@ -235,7 +235,9 @@ class EventManager(object):
         for column, coltype in zip (column, column_types):
             self.event_dtype.append( (column, coltype) )
 
-        self.events = numpy.array([], dtype=self.event_dtype)
+        #self.events = numpy.array([], dtype=self.event_dtype)
+        self.events = None
+        self.event_list = []
         self.template_params = []
         self.template_index = -1
         self.template_events = numpy.array([], dtype=self.event_dtype)
@@ -382,8 +384,13 @@ class EventManager(object):
         self.template_params[-1].update(kwds)
 
     def finalize_template_events(self):
-        self.events = numpy.append(self.events, self.template_events)
+        #self.events = numpy.append(self.events, self.template_events)
+        self.event_list += self.template_events.tolist()
         self.template_events = numpy.array([], dtype=self.event_dtype)
+
+    def finalize_events(self):
+        self.events = numpy.array(self.event_list, dtype=self.event_dtype)
+        self.event_list = None
 
     def make_output_dir(self, outname):
         path = os.path.dirname(outname)

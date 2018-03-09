@@ -237,6 +237,7 @@ with ctx:
               opt, names, [out_types[n] for n in names], psd=None,
               gating_info=gwstrain.gating_info)
         event_mgr.finalize_template_events()
+        event_mgr.finalize_events()
         event_mgr.write_events(opt.output)
         logging.info("Finished")
         sys.exit(0)
@@ -388,7 +389,9 @@ with ctx:
         event_mgr.cluster_template_events("time_index", "snr", cluster_window)
         event_mgr.finalize_template_events()
 
-logging.info("Found %s triggers" % str(len(event_mgr.events)))
+logging.info("Found %s triggers" % str(len(event_mgr.event_list)))
+
+event_mgr.finalize_events()
 
 if opt.chisq_threshold and opt.chisq_bins:
     logging.info("Removing triggers with poor chisq")

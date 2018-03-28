@@ -74,6 +74,7 @@ tpc = numpy.array([], dtype=numpy.float64)
 frpc = numpy.array([], dtype=numpy.float64)
 stf = numpy.array([], dtype=numpy.float64)
 rtime = numpy.array([], dtype=numpy.float64)
+debug_filenames = []
 gating = {}
 for filename in args.trigger_files:
     try:
@@ -93,6 +94,8 @@ for filename in args.trigger_files:
         stf = numpy.append(stf, ifo_data['search/setup_time_fraction'][:])
     if 'run_time' in ifo_data['search'].keys():
         rtime = numpy.append(rtime, ifo_data['search/run_time'][:])
+    if 'debug' in ifo_data.keys():
+        debug_filenames.append(filename)
 
     if 'gating' in ifo_data:
         gating_keys = []
@@ -114,6 +117,9 @@ if len(stf) > 0:
     f['%s/search/setup_time_fraction' % ifo] = stf
 if len(rtime) > 0:
     f['%s/search/run_time' % ifo] = rtime
+if len(debug_filenames) > 0:
+    f['%s/debug/output_filenames' % ifo] = debug_filenames
+
 
 for gk, gv in gating.items():
     f[ifo + '/gating/' + gk] = gv

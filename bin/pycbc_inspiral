@@ -322,9 +322,15 @@ with ctx:
     # within the loop.  Rather, the iteration simply fills the memory specifed in
     # the 'template_mem' argument to MatchedFilterControl with the next template
     # from the bank.
+
+    debug_info = {'shift_sum':[], 'bins':[], 's_num':[], 't_num':[], 'argv':numpy.array(sys.argv)}
+    ncs_cnt = 0
+    t_num = 0
+    continue_bank = True
+
     for t_num in xrange(len(bank)):
         tmplt_generated = False
-       
+
         for s_num, stilde in enumerate(segments):
             # Filter check checks the 'inj_filter_rejector' options to
             # determine whether
@@ -364,9 +370,18 @@ with ctx:
                   bank_chisq.values(template, stilde.psd, stilde, snrv, norm,
                                     idx+stilde.analyze.start)
 
-            out_vals['chisq'], out_vals['chisq_dof'] = \
+            out_vals['chisq'], out_vals['chisq_dof'], shift_sum, bins = \
                   power_chisq.values(corr, snrv, norm, stilde.psd,
                                      idx+stilde.analyze.start, template)
+
+            neg_cs_idx = out_vals['chisq'][:] <= 0.0
+            neg_cs = out_vals['chisq'][:][neg_cs_idx]
+            if (len(neg_cs) > 0):
+                ncs_cnt += 1
+                debug_info['s_num'].append( s_num )
+                debug_info['t_num'].append( t_num )
+                debug_info['bins'].append( numpy.array(bins).copy() )
+                debug_info['shift_sum'].append( numpy.array(shift_sum) )
 
             out_vals['sg_chisq'] = sg_chisq.values(stilde, template, stilde.psd,
                                           snrv, norm,
@@ -428,7 +443,10 @@ run_time = tstop - tstart
 event_mgr.save_performance(ncores, nfilters, ntemplates, run_time, tsetup)
 
 logging.info("Writing out triggers")
-event_mgr.write_events(opt.output)
+if ncs_cnt > 0:
+    event_mgr.write_events(opt.output, debug=debug_info)
+else:
+    event_mgr.write_events(opt.output)
 
 if opt.fftw_output_float_wisdom_file:
     fft.fftw.export_single_wisdom_to_filename(opt.fftw_output_float_wisdom_file)

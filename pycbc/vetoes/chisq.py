@@ -379,9 +379,9 @@ class SingleDetPowerChisq(object):
             else:
                 rchisq = chisq
 
-            return rchisq, numpy.repeat(dof, len(indices)), shift_sum, bins # dof * numpy.ones_like(indices)
+            return rchisq, numpy.repeat(dof, len(indices)), shift_sum # dof * numpy.ones_like(indices)
         else:
-            return None, None
+            return None, None, None
 
 class SingleDetSkyMaxPowerChisq(SingleDetPowerChisq):
     """Class that handles precomputation and memory management for efficiently

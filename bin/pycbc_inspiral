@@ -323,7 +323,7 @@ with ctx:
     # the 'template_mem' argument to MatchedFilterControl with the next template
     # from the bank.
 
-    debug_info = {'shift_sum':[], 's_num':[], 't_num':[], 'argv':numpy.array(sys.argv)}
+    debug_info = {'bins':[], 's_num':[], 't_num':[], 'argv':numpy.array(sys.argv)}
     ncs_cnt = 0
     t_num = 0
     continue_bank = True
@@ -370,7 +370,7 @@ with ctx:
                   bank_chisq.values(template, stilde.psd, stilde, snrv, norm,
                                     idx+stilde.analyze.start)
 
-            out_vals['chisq'], out_vals['chisq_dof'], shift_sum = \
+            out_vals['chisq'], out_vals['chisq_dof'], bins = \
                   power_chisq.values(corr, snrv, norm, stilde.psd,
                                      idx+stilde.analyze.start, template)
 
@@ -380,7 +380,7 @@ with ctx:
                 ncs_cnt += 1
                 debug_info['s_num'].append( s_num )
                 debug_info['t_num'].append( t_num )
-                debug_info['shift_sum'].append( numpy.array(shift_sum) )
+                debug_info['bins'].append( numpy.array(bins) )
 
             out_vals['sg_chisq'] = sg_chisq.values(stilde, template, stilde.psd,
                                           snrv, norm,

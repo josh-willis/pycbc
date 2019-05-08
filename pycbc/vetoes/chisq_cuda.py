@@ -54,7 +54,7 @@ __global__ void power_chisq_at_points_${NP}(
                                       %endif
                                       float2* outc, unsigned int N,
                                       %for p in range(NP):
-                                        float phase${p},
+                                        unsigned int points${p},
                                       %endfor
                                       unsigned int* kmin,
                                       unsigned int* kmax,
@@ -63,6 +63,7 @@ __global__ void power_chisq_at_points_${NP}(
     __shared__ unsigned int s;
     __shared__ unsigned int e;
     __shared__ float2 chisq[${NT} * ${NP}];
+    float twopi = 6.283185307179586;
 
     // load integration boundaries (might not be bin boundaries if bin is large)
     if (threadIdx.x == 0){
@@ -92,7 +93,9 @@ __global__ void power_chisq_at_points_${NP}(
         %endif
 
         %for p in range(NP):
-            __sincosf(phase${p} * i, &im, &re);
+            unsigned int k${p} = (points${p} * i) % N;
+            float phase${p} = twopi * k${p}/((float) N);
+            __sincosf(phase${p}, &im, &re);
             chisq[threadIdx.x + ${NT*p}].x += re * qt.x - im * qt.y;
             chisq[threadIdx.x + ${NT*p}].y += im * qt.x + re * qt.y;
         %endfor
@@ -132,9 +135,9 @@ def get_pchisq_fn(np, fuse_correlate=False):
         mod = SourceModule(chisqkernel.render(NT=nt, NP=np, fuse=fuse_correlate))
         fn = mod.get_function("power_chisq_at_points_%s" % (np))
         if fuse_correlate:
-            fn.prepare("PPPI" + "f" * np + "PPPI")
+            fn.prepare("PPPI" + "I" * np + "PPPI")
         else:
-            fn.prepare("PPI" + "f" * np + "PPPI")
+            fn.prepare("PPI" + "I" * np + "PPPI")
         _pchisq_cache[np] = (fn, nt)
     return _pchisq_cache[np]
 
@@ -158,7 +161,7 @@ def get_cached_bin_layout(bins):
     return kmin, kmax, bv
 
 def shift_sum_points(num, arg_tuple):
-    corr, outp, phase, np, nb, N, kmin, kmax, bv, nbins = arg_tuple
+    corr, outp, points, np, nb, N, kmin, kmax, bv, nbins = arg_tuple
     #fuse = 'fuse' in corr.gpu_callback_method
     fuse = False
 
@@ -170,13 +173,13 @@ def shift_sum_points(num, arg_tuple):
     else:
         args += [corr.data.gpudata]
 
-    args +=[outp.gpudata, N] + phase[0:num] + [kmin.gpudata, kmax.gpudata, bv.gpudata, nbins]
+    args +=[outp.gpudata, N] + points[0:num] + [kmin.gpudata, kmax.gpudata, bv.gpudata, nbins]
     fn.prepared_call(*args)
 
     outp = outp[num*nbins:]
-    phase = phase[num:]
+    phase = points[num:]
     np -= num
-    return outp, phase, np
+    return outp, points, np
 
 def shift_sum(corr, points, bins):
     kmin, kmax, bv = get_cached_bin_layout(bins)
@@ -185,20 +188,20 @@ def shift_sum(corr, points, bins):
     nbins = numpy.uint32(len(bins) - 1)
     outc = pycuda.gpuarray.zeros((len(points), nbins), dtype=numpy.complex64)
     outp = outc.reshape(nbins * len(points))
-    phase = [numpy.float32(p * 2.0 * numpy.pi / N) for p in points]
+    lpoints = points.tolist()
     np = len(points)
 
     while np > 0:
-        cargs = (corr, outp, phase, np, nb, N, kmin, kmax, bv, nbins)
+        cargs = (corr, outp, lpoints, np, nb, N, kmin, kmax, bv, nbins)
 
         if np >= 4:
-            outp, phase, np = shift_sum_points(4, cargs)
+            outp, lpoints, np = shift_sum_points(4, cargs)
         elif np >= 3:
-            outp, phase, np = shift_sum_points(3, cargs)
+            outp, lpoints, np = shift_sum_points(3, cargs)
         elif np >= 2:
-            outp, phase, np = shift_sum_points(2, cargs)
+            outp, lpoints, np = shift_sum_points(2, cargs)
         elif np == 1:
-            outp, phase, np = shift_sum_points(1, cargs)
+            outp, lpoints, np = shift_sum_points(1, cargs)
 
     o = outc.get()
     return (o.conj() * o).sum(axis=1).real

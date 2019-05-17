@@ -297,7 +297,7 @@ def shift_sum_points_pow2(num, arg_tuple):
     np -= num
     return outp, points, np
 
-def _pow2_cache = {}
+_pow2_cache = {}
 def get_cached_pow2(N):
     if N not in _pow2_cache:
         _pow2_cache[N] = not(N & (N-1))

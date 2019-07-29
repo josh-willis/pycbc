@@ -114,6 +114,9 @@ point_chisq_code = """
                     outr_tmp[i] += k1 - k3;
                     outi_tmp[i] += k1 + k2;
 
+                    phases[j + i*slen] = t1 + I*t2;
+                    pvec[j + i*slen] = (k1-k3) + I*(k1+k2);
+
                     // phase shift for the next time point
                     pr[i] = t1 * vsr[i] - t2 * vsi[i];
                     pi[i] = t1 * vsi[i] + t2 * vsr[i];
@@ -163,13 +166,15 @@ def shift_sum(v1, shifts, bins):
         code = point_chisq_code_double
 
     n = int(len(shifts))
+    pvec = numpy.zeros(slen * n, dtype=v1.dtype)
+    phases = numpy.zeros(slen * n, dtype=v1.dtype)
 
     # Create some output memory
     chisq =  numpy.zeros(n, dtype=real_type)
 
-    inline(code, ['v1', 'n', 'chisq', 'slen', 'shifts', 'bins', 'blen'],
+    inline(code, ['v1', 'n', 'chisq', 'slen', 'shifts', 'bins', 'blen', 'pvec', 'phases'],
                     extra_compile_args=[WEAVE_FLAGS] + omp_flags,
                     libraries=omp_libs
           )
 
-    return  chisq
+    return  chisq, pvec.reshape((slen, n)), phases.reshape((slen, n))

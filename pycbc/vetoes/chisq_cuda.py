@@ -142,7 +142,11 @@ __global__ void power_chisq_at_points_${NP}_pow2(
                                       unsigned int* kmin,
                                       unsigned int* kmax,
                                       unsigned int* bv,
-                                      unsigned int nbins){
+                                      unsigned int nbins,
+                                      unsigned int nstart,
+                                      unsigned int ncorr,
+                                      float2* pvec_dbg,
+                                      float2* phases_dbg){
     __shared__ unsigned int s;
     __shared__ unsigned int e;
     __shared__ float2 chisq[${NT} * ${NP}];
@@ -185,6 +189,10 @@ __global__ void power_chisq_at_points_${NP}_pow2(
             __sincosf(phase${p}, &im, &re);
             chisq[threadIdx.x + ${NT*p}].x += re * qt.x - im * qt.y;
             chisq[threadIdx.x + ${NT*p}].y += im * qt.x + re * qt.y;
+            pvec_dbg[i + ncorr *(${p} + nstart)].x = re * qt.x - im * qt.y;
+            pvec_dbg[i + ncorr *(${p} + nstart)].y = im * qt.x + re * qt.y;
+            phases_dbg[i + ncorr *(${p} + nstart)].x = re;
+            phases_dbg[i + ncorr *(${p} + nstart)].y = im;
         %endfor
     }
 
@@ -284,18 +292,19 @@ def shift_sum_points_pow2(num, arg_tuple):
 
     fn, nt = get_pchisq_fn_pow2(num, fuse_correlate = fuse)
 
-    corr, outp, points, np, nb, N, kmin, kmax, bv, nbins = arg_tuple
+    corr, outp, points, np, nb, N, kmin, kmax, bv, nbins, nstart, ncorr, pvec_dbg, phases_dbg = arg_tuple
     args = [(nb, 1), (nt, 1, 1)]
     if fuse:
         args += [corr.htilde.data.gpudata, corr.stilde.data.gpudata]
     else:
         args += [corr.data.gpudata]
-    args +=[outp.gpudata, N] + points[0:num] + [kmin.gpudata, kmax.gpudata, bv.gpudata, nbins]
+    args +=[outp.gpudata, N] + points[0:num] + [kmin.gpudata, kmax.gpudata, bv.gpudata, nbins, nstart, ncorr, pvec_dbg.gpudata, phases_dbg.gpudata]
     fn.prepared_call(*args)
     outp = outp[num*nbins:]
     points = points[num:]
     np -= num
-    return outp, points, np
+    nstart +=num
+    return outp, points, np, nstart
 
 _pow2_cache = {}
 def get_cached_pow2(N):
@@ -312,20 +321,24 @@ def shift_sum(corr, points, bins):
     outc = pycuda.gpuarray.zeros((len(points), nbins), dtype=numpy.complex64)
     outp = outc.reshape(nbins * len(points))
     np = len(points)
+    nstart = 0
+    ncorr = len(corr)
+    pvec_dbg = pycuda.gpuarray.zeros(np * ncorr, dtype=numpy.complex64)
+    phases_dbg = pycuda.gpuarray.zeros(np * ncorr, dtype=numpy.complex64)
 
     if is_pow2:
         lpoints = points.tolist()
         while np > 0:
-            cargs = (corr, outp, lpoints, np, nb, N, kmin, kmax, bv, nbins)
+            cargs = (corr, outp, lpoints, np, nb, N, kmin, kmax, bv, nbins, nstart, ncorr, pvec_dbg, phases_dbg)
 
             if np >= 4:
-                outp, lpoints, np = shift_sum_points_pow2(4, cargs)
+                outp, lpoints, np, nstart = shift_sum_points_pow2(4, cargs)
             elif np >= 3:
-                outp, lpoints, np = shift_sum_points_pow2(3, cargs)
+                outp, lpoints, np, nstart = shift_sum_points_pow2(3, cargs)
             elif np >= 2:
-                outp, lpoints, np = shift_sum_points_pow2(2, cargs)
+                outp, lpoints, np, nstart = shift_sum_points_pow2(2, cargs)
             elif np == 1:
-                outp, lpoints, np = shift_sum_points_pow2(1, cargs)
+                outp, lpoints, np, nstart = shift_sum_points_pow2(1, cargs)
     else:
         phase = [numpy.float32(p * 2.0 * numpy.pi / N) for p in points]
         while np > 0:
@@ -341,7 +354,9 @@ def shift_sum(corr, points, bins):
                 outp, phase, np = shift_sum_points(1, cargs)
 
     o = outc.get()
-    return (o.conj() * o).sum(axis=1).real
+    pvec_arrs = pvec_dbg.get().reshape((ncorr, len(points))
+    phases_arrs = phases_dbg.get().reshape((ncorr, len(points))
+    return (o.conj() * o).sum(axis=1).real, pvec_arrs, phases_arrs
 
 
 

@@ -28,6 +28,8 @@ from pycbc.filter import sigmasq_series, make_frequency_series, matched_filter_c
 from pycbc.scheme import schemed
 import pycbc.pnutils
 
+debug_hdf_group = None
+
 BACKEND_PREFIX="pycbc.vetoes.chisq_"
 
 def power_chisq_bins_from_sigmasq_series(sigmasq_series, num_bins, kmin, kmax):
@@ -131,8 +133,13 @@ def power_chisq_at_points_from_precomputed(corr, snr, snr_norm, bins, indices):
     chisq: Array
         An array containing only the chisq at the selected points.
     """
+    global debug_hdf_group
     num_bins = len(bins) - 1
-    chisq = shift_sum(corr, indices, bins) # pylint:disable=assignment-from-no-return
+    chisq, pvec, phases = shift_sum(corr, indices, bins) # pylint:disable=assignment-from-no-return
+    if debug_hdf_group is not None:
+        debug_hdf_group.create_dataset("pvec", data = pvec)
+        debug_hdf_group.create_dataset("phases", data = phases)
+        debug_hdf_group.create_dataset("bins", data = bins)
     return (chisq * num_bins - (snr.conj() * snr).real) * (snr_norm ** 2.0)
 
 _q_l = None

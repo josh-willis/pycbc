@@ -30,6 +30,9 @@ import pycbc.weave
 import pycbc.inject
 import time
 
+import h5py
+import vetoes.chisq
+
 last_progress_update = -1.0
 
 def update_progress(p,u,n):
@@ -171,6 +174,9 @@ parser.add_argument("--use-compressed-waveforms", action="store_true", default=F
 parser.add_argument("--waveform-decompression-method", action='store', default=None,
                     help='Method to be used decompress waveforms from the bank file.')
 
+parser.add_argument("--debug-file", type=str, default=None, help="File to save detailed debugging info")
+
+
 # Add options groups
 psd.insert_psd_option_group(parser)
 strain.insert_strain_option_group(parser)
@@ -202,6 +208,10 @@ gwstrain = strain.from_cli(opt, dyn_range_fac=DYN_RANGE_FAC,
                            inj_filter_rejector=inj_filter_rejector)
 
 strain_segments = strain.StrainSegments.from_cli(opt, gwstrain)
+
+if opt.debug_file is not None:
+    debug_fp = h5py.File(opt.debug_file, "w")
+    dbg_cnt = 0
 
 
 with ctx:
@@ -377,6 +387,16 @@ with ctx:
                                                          cluster_window,
                                                          epoch=stilde._epoch)
 
+            if opt.debug_file is not None:
+                vetoes.chisq.debug_hdf_group = debug_fp.create_group(str(dbg_cnt))
+                vetoes.chisq.debug_hdf_group.create_dataset("template", data=numpy.array(template.data))
+                vetoes.chisq.debug_hdf_group.create_dataset("stilde", data=numpy.array(stilde.data))
+                vetoes.chisq.debug_hdf_group.create_dataset("psd", data=numpy.array(stilde.psd.data))
+                vetoes.chisq.debug_hdf_group.create_dataset("snr", data=numpy.array(snr.data))
+                vetoes.chisq.debug_hdf_group.create_dataset("corr", data=numpy.array(corr.data))
+                vetoes.chisq.debug_hdf_group.create_dataset("norm", data=numpy.array(norm))
+                dbg_cnt += 1
+
             if not len(idx):
                 continue
 
@@ -448,6 +468,9 @@ event_mgr.save_performance(ncores, nfilters, ntemplates, run_time, tsetup)
 
 logging.info("Writing out triggers")
 event_mgr.write_events(opt.output)
+
+if opt.debug_file is not None:
+    debug_fp.close()
 
 if opt.fftw_output_float_wisdom_file:
     fft.fftw.export_single_wisdom_to_filename(opt.fftw_output_float_wisdom_file)

@@ -243,9 +243,9 @@ def get_pchisq_fn_pow2(np, fuse_correlate=False):
         mod = SourceModule(chisqkernel_pow2.render(NT=nt, NP=np, fuse=fuse_correlate))
         fn = mod.get_function("power_chisq_at_points_%s_pow2" % (np))
         if fuse_correlate:
-            fn.prepare("PPPI" + "I" * np + "PPPI")
+            fn.prepare("PPPI" + "I" * np + "PPPIIIPP")
         else:
-            fn.prepare("PPI" + "I" * np + "PPPI")
+            fn.prepare("PPI" + "I" * np + "PPPIIIPP")
         _pchisq_cache_pow2[np] = (fn, nt)
     return _pchisq_cache_pow2[np]
 

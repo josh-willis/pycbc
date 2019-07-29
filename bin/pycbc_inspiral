@@ -427,6 +427,11 @@ with ctx:
             idx += stilde.cumulative_index
 
             out_vals['time_index'] = idx
+            if opt.debug_file is not None:
+                pycbc.vetoes.chisq.debug_hdf_group.create_dataset("end_time", data=numpy.array(out_vals['time_index'] /
+                                                                     float(event_mgr.opt.sample_rate) + event_mgr.opt.gps_start_time))
+
+
             out_vals['snr'] = snrv * norm
 
             if opt.psdvar_short_segment is not None:

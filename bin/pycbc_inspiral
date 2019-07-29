@@ -409,6 +409,10 @@ with ctx:
                   power_chisq.values(corr, snrv, norm, stilde.psd,
                                      idx+stilde.analyze.start, template)
 
+            if opt.debug_file is not None:
+                pycbc.vetoes.chisq.debug_hdf_group.create_dataset("chisq", data=numpy.array(out_vals['chisq']))
+                pycbc.vetoes.chisq.debug_hdf_group.create_dataset("chisq_dof", data=numpy.array(out_vals['chisq_dof']))
+
             out_vals['sg_chisq'] = sg_chisq.values(stilde, template, stilde.psd,
                                           snrv, norm,
                                           out_vals['chisq'],

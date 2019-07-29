@@ -354,8 +354,8 @@ def shift_sum(corr, points, bins):
                 outp, phase, np = shift_sum_points(1, cargs)
 
     o = outc.get()
-    pvec_arrs = pvec_dbg.get().reshape((ncorr, len(points))
-    phases_arrs = phases_dbg.get().reshape((ncorr, len(points))
+    pvec_arrs = pvec_dbg.get().reshape((ncorr, len(points)))
+    phases_arrs = phases_dbg.get().reshape((ncorr, len(points)))
     return (o.conj() * o).sum(axis=1).real, pvec_arrs, phases_arrs
 
 

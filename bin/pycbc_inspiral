@@ -395,7 +395,7 @@ with ctx:
                 pycbc.vetoes.chisq.debug_hdf_group.create_dataset("snr", data=numpy.array(snr.numpy()))
                 pycbc.vetoes.chisq.debug_hdf_group.create_dataset("corr", data=numpy.array(corr.numpy()))
                 pycbc.vetoes.chisq.debug_hdf_group.create_dataset("norm", data=numpy.array(norm))
-                pycbc.vetoes.chisq.debug_hdf_group.create_dataset("indices", data=numpy.array(idx))
+                pycbc.vetoes.chisq.debug_hdf_group.create_dataset("indices", data=numpy.array(idx+stilde.analyze.start))
                 dbg_cnt += 1
 
             if not len(idx):

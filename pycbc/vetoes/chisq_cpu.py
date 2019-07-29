@@ -55,6 +55,10 @@ def chisq_accum_bin_inline(chisq, q):
 
 chisq_accum_bin = chisq_accum_bin_inline
 
+chisq_support = """
+#include <complex>
+"""
+
 point_chisq_code = """
     int num_parallel_regions = 16;
 
@@ -174,7 +178,7 @@ def shift_sum(v1, shifts, bins):
 
     inline(code, ['v1', 'n', 'chisq', 'slen', 'shifts', 'bins', 'blen', 'pvec', 'phases'],
                     extra_compile_args=[WEAVE_FLAGS] + omp_flags,
-                    libraries=omp_libs
+                    libraries=omp_libs, support_code = chisq_support
           )
 
     return  chisq, pvec.reshape((slen, n)), phases.reshape((slen, n))

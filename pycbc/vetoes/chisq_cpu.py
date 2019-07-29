@@ -118,8 +118,8 @@ point_chisq_code = """
                     outr_tmp[i] += k1 - k3;
                     outi_tmp[i] += k1 + k2;
 
-                    phases[j + i*slen] = t1 + I*t2;
-                    pvec[j + i*slen] = (k1-k3) + I*(k1+k2);
+                    phases[j + i*slen] = std::complex<TYPE>(t1, t2);
+                    pvec[j + i*slen] = std::complex<TYPE>(k1-k3,k1+k2);
 
                     // phase shift for the next time point
                     pr[i] = t1 * vsr[i] - t2 * vsi[i];

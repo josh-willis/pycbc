@@ -31,7 +31,7 @@ import pycbc.inject
 import time
 
 import h5py
-import vetoes.chisq
+import pycbc.vetoes.chisq
 
 last_progress_update = -1.0
 
@@ -388,13 +388,13 @@ with ctx:
                                                          epoch=stilde._epoch)
 
             if opt.debug_file is not None:
-                vetoes.chisq.debug_hdf_group = debug_fp.create_group(str(dbg_cnt))
-                vetoes.chisq.debug_hdf_group.create_dataset("template", data=numpy.array(template.data))
-                vetoes.chisq.debug_hdf_group.create_dataset("stilde", data=numpy.array(stilde.data))
-                vetoes.chisq.debug_hdf_group.create_dataset("psd", data=numpy.array(stilde.psd.data))
-                vetoes.chisq.debug_hdf_group.create_dataset("snr", data=numpy.array(snr.data))
-                vetoes.chisq.debug_hdf_group.create_dataset("corr", data=numpy.array(corr.data))
-                vetoes.chisq.debug_hdf_group.create_dataset("norm", data=numpy.array(norm))
+                pycbc.vetoes.chisq.debug_hdf_group = debug_fp.create_group(str(dbg_cnt))
+                pycbc.vetoes.chisq.debug_hdf_group.create_dataset("template", data=numpy.array(template.data))
+                pycbc.vetoes.chisq.debug_hdf_group.create_dataset("stilde", data=numpy.array(stilde.data))
+                pycbc.vetoes.chisq.debug_hdf_group.create_dataset("psd", data=numpy.array(stilde.psd.data))
+                pycbc.vetoes.chisq.debug_hdf_group.create_dataset("snr", data=numpy.array(snr.data))
+                pycbc.vetoes.chisq.debug_hdf_group.create_dataset("corr", data=numpy.array(corr.data))
+                pycbc.vetoes.chisq.debug_hdf_group.create_dataset("norm", data=numpy.array(norm))
                 dbg_cnt += 1
 
             if not len(idx):

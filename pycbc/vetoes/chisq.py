@@ -56,6 +56,8 @@ def power_chisq_bins_from_sigmasq_series(sigmasq_series, num_bins, kmin, kmax):
 
     """
     sigmasq = sigmasq_series[kmax - 1]
+    if debug_hdf_group is not None:
+        debug_hdf_group.create_dataset("sigmasq", data = sigmasq.numpy())
     edge_vec = numpy.arange(0, num_bins) * sigmasq / num_bins
     bins = numpy.searchsorted(sigmasq_series[kmin:kmax], edge_vec, side='right')
     bins += kmin

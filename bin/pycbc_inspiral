@@ -390,8 +390,10 @@ with ctx:
             if opt.debug_file is not None:
                 pycbc.vetoes.chisq.debug_hdf_group = debug_fp.create_group(str(dbg_cnt))
                 pycbc.vetoes.chisq.debug_hdf_group.create_dataset("template", data=numpy.array(template_mem.numpy()))
-                pycbc.vetoes.chisq.debug_hdf_group.create_dataset("stilde", data=numpy.array(stilde.numpy()))
-                pycbc.vetoes.chisq.debug_hdf_group.create_dataset("psd", data=numpy.array(stilde.psd.numpy()))
+                vst = pycbc.vetoes.chisq.debug_hdf_group.create_dataset("stilde", data=numpy.array(stilde.numpy()))
+                vst.attrs['delta_f'] = stilde.delta_f
+                vpsd = pycbc.vetoes.chisq.debug_hdf_group.create_dataset("psd", data=numpy.array(stilde.psd.numpy()))
+                vpsd.attrs['delta_f'] = stilde.psd.delta_f
                 pycbc.vetoes.chisq.debug_hdf_group.create_dataset("snr", data=numpy.array(snr.numpy()))
                 pycbc.vetoes.chisq.debug_hdf_group.create_dataset("corr", data=numpy.array(corr.numpy()))
                 pycbc.vetoes.chisq.debug_hdf_group.create_dataset("norm", data=numpy.array(norm))

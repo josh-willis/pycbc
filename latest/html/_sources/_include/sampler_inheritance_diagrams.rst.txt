@@ -1,0 +1,40 @@
+.. _inheritance-dynesty:
+
+* ``dynesty``:
+
+.. inheritance-diagram:: pycbc.inference.sampler.dynesty.DynestySampler
+   :parts: 3
+
+|
+
+
+.. _inheritance-emcee:
+
+* ``emcee``:
+
+.. inheritance-diagram:: pycbc.inference.sampler.emcee.EmceeEnsembleSampler
+   :parts: 3
+
+|
+
+
+.. _inheritance-emcee_pt:
+
+* ``emcee_pt``:
+
+.. inheritance-diagram:: pycbc.inference.sampler.emcee_pt.EmceePTSampler
+   :parts: 3
+
+|
+
+
+.. _inheritance-multinest:
+
+* ``multinest``:
+
+.. inheritance-diagram:: pycbc.inference.sampler.multinest.MultinestSampler
+   :parts: 3
+
+|
+
+

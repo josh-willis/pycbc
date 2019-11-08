@@ -1,0 +1,8 @@
+===============  ==============================================================
+Name             Class
+===============  ==============================================================
+``'dynesty'``    :py:class:`pycbc.inference.sampler.dynesty.DynestySampler`
+``'emcee'``      :py:class:`pycbc.inference.sampler.emcee.EmceeEnsembleSampler`
+``'emcee_pt'``   :py:class:`pycbc.inference.sampler.emcee_pt.EmceePTSampler`
+``'multinest'``  :py:class:`pycbc.inference.sampler.multinest.MultinestSampler`
+===============  ==============================================================

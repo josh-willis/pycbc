@@ -1,0 +1,1870 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pycbc.inference.models package &mdash; PyCBC 23d915 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/typed.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/terminal.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pycbc.inference.sampler package" href="pycbc.inference.sampler.html" />
+    <link rel="prev" title="pycbc.inference.io package" href="pycbc.inference.io.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> PyCBC
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.14.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="credit.html">Use of PyCBC in Scientific Publications</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Running PyCBC under Docker</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing PyCBC</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="workflow/pycbc_make_psd_estimation_workflow.html"><code class="docutils literal notranslate"><span class="pre">pycbc_make_psd_estimation_workflow</span></code>: A workflow generator for noise estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow/pycbc_make_coinc_search_workflow.html"><code class="docutils literal notranslate"><span class="pre">pycbc_make_coinc_search_workflow</span></code>: A workflow to search for gravitational waves</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow/pygrb.html"><code class="docutils literal notranslate"><span class="pre">pycbc_make_offline_grb_workflow</span></code>: A GRB triggered CBC analysis workflow generator</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="inference.html">PyCBC inference documentation (<code class="docutils literal notranslate"><span class="pre">pycbc.inference</span></code>)</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tmpltbank.html">PyCBC template bank generation documentation (<code class="docutils literal notranslate"><span class="pre">pycbc.tmpltbank</span></code>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hwinj.html">Hardware injection waveform generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="banksim.html">Calculating the Effectualness (Fitting Factor) of Template Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faithsim.html">Dag Generator for Doing Faithfulness Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upload_to_gracedb.html">Uploading triggers to gracedb</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="catalog.html">Catalog of Observed Gravitational-wave Mergers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataquality.html">Query times of valid data, hardware injections, and more.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="frame.html">Reading Gravitational-wave Frames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gw150914.html">Signal Processing with GW150914</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detector.html">Gravitational-wave Detectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="psd.html">Handling PSDs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="noise.html">Generating Noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="waveform.html">Waveforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filter.html">Filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributions.html">Using PyCBC Distributions from PyCBC Inference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="building_bundled_executables.html">Building Bundled Executables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">Documenting PyCBC code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release.html">Creating Releases of PyCBC</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="formats/hdf_format.html">HDF files within the PyCBC workflow</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow: the inspiral analysis workflow generator (<code class="docutils literal notranslate"><span class="pre">pycbc.workflow</span></code>)</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pycbc</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pycbc.html">pycbc package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="pycbc.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="pycbc.catalog.html">pycbc.catalog package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycbc.distributions.html">pycbc.distributions package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycbc.events.html">pycbc.events package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycbc.fft.html">pycbc.fft package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycbc.filter.html">pycbc.filter package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycbc.frame.html">pycbc.frame package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="pycbc.inference.html">pycbc.inference package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycbc.inject.html">pycbc.inject package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycbc.io.html">pycbc.io package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycbc.noise.html">pycbc.noise package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycbc.population.html">pycbc.population package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycbc.psd.html">pycbc.psd package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycbc.results.html">pycbc.results package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycbc.strain.html">pycbc.strain package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycbc.tmpltbank.html">pycbc.tmpltbank package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycbc.types.html">pycbc.types package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycbc.vetoes.html">pycbc.vetoes package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycbc.waveform.html">pycbc.waveform package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycbc.workflow.html">pycbc.workflow package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.bin_utils">pycbc.bin_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.boundaries">pycbc.boundaries module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.conversions">pycbc.conversions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.coordinates">pycbc.coordinates module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.cosmology">pycbc.cosmology module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.detector">pycbc.detector module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.dq">pycbc.dq module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.libutils">pycbc.libutils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.mchirp_area">pycbc.mchirp_area module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.opt">pycbc.opt module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.pnutils">pycbc.pnutils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.pool">pycbc.pool module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.rate">pycbc.rate module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.scheme">pycbc.scheme module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.sensitivity">pycbc.sensitivity module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.transforms">pycbc.transforms module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.version">pycbc.version module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc.weave">pycbc.weave module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pycbc.html#module-pycbc">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PyCBC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">pycbc</a> &raquo;</li>
+        
+          <li><a href="pycbc.html">pycbc package</a> &raquo;</li>
+        
+          <li><a href="pycbc.inference.html">pycbc.inference package</a> &raquo;</li>
+        
+      <li>pycbc.inference.models package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/pycbc.inference.models.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pycbc-inference-models-package">
+<h1>pycbc.inference.models package<a class="headerlink" href="#pycbc-inference-models-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pycbc.inference.models.analytic">
+<span id="pycbc-inference-models-analytic-module"></span><h2>pycbc.inference.models.analytic module<a class="headerlink" href="#module-pycbc.inference.models.analytic" title="Permalink to this headline">¶</a></h2>
+<p>This modules provides models that have analytic solutions for the
+log likelihood.</p>
+<dl class="class">
+<dt id="pycbc.inference.models.analytic.TestEggbox">
+<em class="property">class </em><code class="descclassname">pycbc.inference.models.analytic.</code><code class="descname">TestEggbox</code><span class="sig-paren">(</span><em>variable_params</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/analytic.html#TestEggbox"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.analytic.TestEggbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.models.base.BaseModel" title="pycbc.inference.models.base.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.models.base.BaseModel</span></code></a></p>
+<p>The test distribution is an ‘eggbox’ function:</p>
+<div class="math notranslate nohighlight">
+\[\log \mathcal{L}(\Theta) = \left[
+    2+\prod_{i=1}^{n}\cos\left(\frac{\theta_{i}}{2}\right)\right]^{5}\]</div>
+<p>The number of dimensions is set by the number of <code class="docutils literal notranslate"><span class="pre">variable_params</span></code> that
+are passed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>variable_params</strong> (<em>(</em><em>tuple of</em><em>) </em><em>string</em><em>(</em><em>s</em><em>)</em>) – A tuple of parameter names that will be varied.</li>
+<li><strong>**kwargs</strong> – All other keyword arguments are passed to <code class="docutils literal notranslate"><span class="pre">BaseModel</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="pycbc.inference.models.analytic.TestEggbox.name">
+<code class="descname">name</code><em class="property"> = 'test_eggbox'</em><a class="headerlink" href="#pycbc.inference.models.analytic.TestEggbox.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pycbc.inference.models.analytic.TestNormal">
+<em class="property">class </em><code class="descclassname">pycbc.inference.models.analytic.</code><code class="descname">TestNormal</code><span class="sig-paren">(</span><em>variable_params</em>, <em>mean=None</em>, <em>cov=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/analytic.html#TestNormal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.analytic.TestNormal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.models.base.BaseModel" title="pycbc.inference.models.base.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.models.base.BaseModel</span></code></a></p>
+<p>The test distribution is an multi-variate normal distribution.</p>
+<p>The number of dimensions is set by the number of <code class="docutils literal notranslate"><span class="pre">variable_params</span></code> that
+are passed. For details on the distribution used, see
+<code class="docutils literal notranslate"><span class="pre">scipy.stats.multivariate_normal</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>variable_params</strong> (<em>(</em><em>tuple of</em><em>) </em><em>string</em><em>(</em><em>s</em><em>)</em>) – A tuple of parameter names that will be varied.</li>
+<li><strong>mean</strong> (<em>array-like</em><em>, </em><em>optional</em>) – The mean values of the parameters. If None provide, will use 0 for all
+parameters.</li>
+<li><strong>cov</strong> (<em>array-like</em><em>, </em><em>optional</em>) – The covariance matrix of the parameters. If None provided, will use
+unit variance for all parameters, with cross-terms set to 0.</li>
+<li><strong>**kwargs</strong> – All other keyword arguments are passed to <code class="docutils literal notranslate"><span class="pre">BaseModel</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Create a 2D model with zero mean and unit variance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">TestNormal</span><span class="p">([</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Set the current parameters and evaluate the log posterior:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">logposterior</span>
+<span class="go">-1.8628770664093453</span>
+</pre></div>
+</div>
+<p>See the current stats that were evaluated:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">current_stats</span>
+<span class="go">{&#39;logjacobian&#39;: 0.0, &#39;loglikelihood&#39;: -1.8628770664093453, &#39;logprior&#39;: 0.0}</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="pycbc.inference.models.analytic.TestNormal.name">
+<code class="descname">name</code><em class="property"> = 'test_normal'</em><a class="headerlink" href="#pycbc.inference.models.analytic.TestNormal.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pycbc.inference.models.analytic.TestPrior">
+<em class="property">class </em><code class="descclassname">pycbc.inference.models.analytic.</code><code class="descname">TestPrior</code><span class="sig-paren">(</span><em>variable_params</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/analytic.html#TestPrior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.analytic.TestPrior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.models.base.BaseModel" title="pycbc.inference.models.base.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.models.base.BaseModel</span></code></a></p>
+<p>Uses the prior as the test distribution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>variable_params</strong> (<em>(</em><em>tuple of</em><em>) </em><em>string</em><em>(</em><em>s</em><em>)</em>) – A tuple of parameter names that will be varied. Must have length 2.</li>
+<li><strong>**kwargs</strong> – All other keyword arguments are passed to <code class="docutils literal notranslate"><span class="pre">BaseModel</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="pycbc.inference.models.analytic.TestPrior.name">
+<code class="descname">name</code><em class="property"> = 'test_prior'</em><a class="headerlink" href="#pycbc.inference.models.analytic.TestPrior.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pycbc.inference.models.analytic.TestRosenbrock">
+<em class="property">class </em><code class="descclassname">pycbc.inference.models.analytic.</code><code class="descname">TestRosenbrock</code><span class="sig-paren">(</span><em>variable_params</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/analytic.html#TestRosenbrock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.analytic.TestRosenbrock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.models.base.BaseModel" title="pycbc.inference.models.base.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.models.base.BaseModel</span></code></a></p>
+<p>The test distribution is the Rosenbrock function:</p>
+<div class="math notranslate nohighlight">
+\[\log \mathcal{L}(\Theta) = -\sum_{i=1}^{n-1}[
+    (1-\theta_{i})^{2}+100(\theta_{i+1} - \theta_{i}^{2})^{2}]\]</div>
+<p>The number of dimensions is set by the number of <code class="docutils literal notranslate"><span class="pre">variable_params</span></code> that
+are passed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>variable_params</strong> (<em>(</em><em>tuple of</em><em>) </em><em>string</em><em>(</em><em>s</em><em>)</em>) – A tuple of parameter names that will be varied.</li>
+<li><strong>**kwargs</strong> – All other keyword arguments are passed to <code class="docutils literal notranslate"><span class="pre">BaseModel</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="pycbc.inference.models.analytic.TestRosenbrock.name">
+<code class="descname">name</code><em class="property"> = 'test_rosenbrock'</em><a class="headerlink" href="#pycbc.inference.models.analytic.TestRosenbrock.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pycbc.inference.models.analytic.TestVolcano">
+<em class="property">class </em><code class="descclassname">pycbc.inference.models.analytic.</code><code class="descname">TestVolcano</code><span class="sig-paren">(</span><em>variable_params</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/analytic.html#TestVolcano"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.analytic.TestVolcano" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.models.base.BaseModel" title="pycbc.inference.models.base.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.models.base.BaseModel</span></code></a></p>
+<p>The test distribution is a two-dimensional ‘volcano’ function:</p>
+<div class="math notranslate nohighlight">
+\[\Theta =
+    \sqrt{\theta_{1}^{2} + \theta_{2}^{2}} \log \mathcal{L}(\Theta) =
+    25\left(e^{\frac{-\Theta}{35}} +
+            \frac{1}{2\sqrt{2\pi}} e^{-\frac{(\Theta-5)^{2}}{8}}\right)\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>variable_params</strong> (<em>(</em><em>tuple of</em><em>) </em><em>string</em><em>(</em><em>s</em><em>)</em>) – A tuple of parameter names that will be varied. Must have length 2.</li>
+<li><strong>**kwargs</strong> – All other keyword arguments are passed to <code class="docutils literal notranslate"><span class="pre">BaseModel</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="pycbc.inference.models.analytic.TestVolcano.name">
+<code class="descname">name</code><em class="property"> = 'test_volcano'</em><a class="headerlink" href="#pycbc.inference.models.analytic.TestVolcano.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pycbc.inference.models.base">
+<span id="pycbc-inference-models-base-module"></span><h2>pycbc.inference.models.base module<a class="headerlink" href="#module-pycbc.inference.models.base" title="Permalink to this headline">¶</a></h2>
+<p>Base class for models.</p>
+<dl class="class">
+<dt id="pycbc.inference.models.base.BaseModel">
+<em class="property">class </em><code class="descclassname">pycbc.inference.models.base.</code><code class="descname">BaseModel</code><span class="sig-paren">(</span><em>variable_params</em>, <em>static_params=None</em>, <em>prior=None</em>, <em>sampling_transforms=None</em>, <em>waveform_transforms=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/base.html#BaseModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base.BaseModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Base class for all models.</p>
+<p>Given some model <span class="math notranslate nohighlight">\(h\)</span> with parameters <span class="math notranslate nohighlight">\(\Theta\)</span>, Bayes Theorem
+states that the probability of observing parameter values <span class="math notranslate nohighlight">\(\vartheta\)</span>
+is:</p>
+<div class="math notranslate nohighlight">
+\[p(\vartheta|h) = \frac{p(h|\vartheta) p(\vartheta)}{p(h)}.\]</div>
+<p>Here:</p>
+<blockquote>
+<div><ul class="simple">
+<li><span class="math notranslate nohighlight">\(p(\vartheta|h)\)</span> is the <strong>posterior</strong> probability;</li>
+<li><span class="math notranslate nohighlight">\(p(h|\vartheta)\)</span> is the <strong>likelihood</strong>;</li>
+<li><span class="math notranslate nohighlight">\(p(\vartheta)\)</span> is the <strong>prior</strong>;</li>
+<li><span class="math notranslate nohighlight">\(p(h)\)</span> is the <strong>evidence</strong>.</li>
+</ul>
+</div></blockquote>
+<p>This class defines properties and methods for evaluating the log
+likelihood, log prior, and log posteror. A set of parameter values is set
+using the <code class="docutils literal notranslate"><span class="pre">update</span></code> method. Calling the class’s
+<code class="docutils literal notranslate"><span class="pre">log(likelihood|prior|posterior)</span></code> properties will then evaluate the model
+at those parameter values.</p>
+<p>Classes that inherit from this class must implement a <code class="docutils literal notranslate"><span class="pre">_loglikelihood</span></code>
+function that can be called by <code class="docutils literal notranslate"><span class="pre">loglikelihood</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>variable_params</strong> (<em>(</em><em>tuple of</em><em>) </em><em>string</em><em>(</em><em>s</em><em>)</em>) – A tuple of parameter names that will be varied.</li>
+<li><strong>static_params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>, </em><em>optional</em>) – A dictionary of parameter names -&gt; values to keep fixed.</li>
+<li><strong>prior</strong> (<em>callable</em><em>, </em><em>optional</em>) – A callable class or function that computes the log of the prior. If
+None provided, will use <code class="docutils literal notranslate"><span class="pre">_noprior</span></code>, which returns 0 for all parameter
+values.</li>
+<li><strong>sampling_params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em>, </em><em>optional</em>) – Replace one or more of the <code class="docutils literal notranslate"><span class="pre">variable_params</span></code> with the given
+parameters for sampling.</li>
+<li><strong>replace_parameters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em>, </em><em>optional</em>) – The <code class="docutils literal notranslate"><span class="pre">variable_params</span></code> to replace with sampling parameters. Must be
+the same length as <code class="docutils literal notranslate"><span class="pre">sampling_params</span></code>.</li>
+<li><strong>sampling_transforms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em>, </em><em>optional</em>) – List of transforms to use to go between the <code class="docutils literal notranslate"><span class="pre">variable_params</span></code> and the
+sampling parameters. Required if <code class="docutils literal notranslate"><span class="pre">sampling_params</span></code> is not None.</li>
+<li><strong>waveform_transforms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em>, </em><em>optional</em>) – A list of transforms to convert the <code class="docutils literal notranslate"><span class="pre">variable_params</span></code> into something
+understood by the likelihood model. This is useful if the prior is
+more easily parameterized in parameters that are different than what
+the likelihood is most easily defined in. Since these are used solely
+for converting parameters, and not for rescaling the parameter space,
+a Jacobian is not required for these transforms.</li>
+<li><strong>Properties</strong> – </li>
+<li><strong>----------</strong> – </li>
+<li><strong>logjacobian</strong> – Returns the log of the jacobian needed to go from the parameter space
+of the <code class="docutils literal notranslate"><span class="pre">variable_params</span></code> to the sampling params.</li>
+<li><strong>logprior</strong> – Returns the log of the prior.</li>
+<li><strong>loglikelihood</strong> – A function that returns the log of the likelihood function.</li>
+<li><strong>logposterior</strong> – A function that returns the log of the posterior.</li>
+<li><strong>loglr</strong> – A function that returns the log of the likelihood ratio.</li>
+<li><strong>logplr</strong> – A function that returns the log of the prior-weighted likelihood ratio.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="pycbc.inference.models.base.BaseModel.current_params">
+<code class="descname">current_params</code><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.current_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.base.BaseModel.current_stats">
+<code class="descname">current_stats</code><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.current_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the <code class="docutils literal notranslate"><span class="pre">default_stats</span></code> as a dict.</p>
+<p>This does no computation. It only returns what has already been
+calculated. If a stat hasn’t been calculated, it will be returned
+as <code class="docutils literal notranslate"><span class="pre">numpy.nan</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dictionary of stat names -&gt; current stat values.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.base.BaseModel.default_stats">
+<code class="descname">default_stats</code><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.default_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>The stats that <code class="docutils literal notranslate"><span class="pre">get_current_stats</span></code> returns by default.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pycbc.inference.models.base.BaseModel.extra_args_from_config">
+<em class="property">static </em><code class="descname">extra_args_from_config</code><span class="sig-paren">(</span><em>cp</em>, <em>section</em>, <em>skip_args=None</em>, <em>dtypes=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/base.html#BaseModel.extra_args_from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.extra_args_from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets any additional keyword in the given config file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cp</strong> (<a class="reference internal" href="pycbc.workflow.html#pycbc.workflow.configuration.WorkflowConfigParser" title="pycbc.workflow.configuration.WorkflowConfigParser"><em>WorkflowConfigParser</em></a>) – Config file parser to read.</li>
+<li><strong>section</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the section to read.</li>
+<li><strong>skip_args</strong> (<em>list of str</em><em>, </em><em>optional</em>) – Names of arguments to skip.</li>
+<li><strong>dtypes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>, </em><em>optional</em>) – A dictionary of arguments -&gt; data types. If an argument is found
+in the dict, it will be cast to the given datatype. Otherwise, the
+argument’s value will just be read from the config file (and thus
+be a string).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Dictionary of keyword arguments read from the config file.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pycbc.inference.models.base.BaseModel.from_config">
+<em class="property">classmethod </em><code class="descname">from_config</code><span class="sig-paren">(</span><em>cp</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/base.html#BaseModel.from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes an instance of this class from the given config file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cp</strong> (<a class="reference internal" href="pycbc.workflow.html#pycbc.workflow.configuration.WorkflowConfigParser" title="pycbc.workflow.configuration.WorkflowConfigParser"><em>WorkflowConfigParser</em></a>) – Config file parser to read.</li>
+<li><strong>**kwargs</strong> – All additional keyword arguments are passed to the class. Any
+provided keyword will over ride what is in the config file.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.models.base.BaseModel.get_current_stats">
+<code class="descname">get_current_stats</code><span class="sig-paren">(</span><em>names=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/base.html#BaseModel.get_current_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.get_current_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return one or more of the current stats as a tuple.</p>
+<p>This function does no computation. It only returns what has already
+been calculated. If a stat hasn’t been calculated, it will be returned
+as <code class="docutils literal notranslate"><span class="pre">numpy.nan</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>names</strong> (<em>list of str</em><em>, </em><em>optional</em>) – Specify the names of the stats to retrieve. If <code class="docutils literal notranslate"><span class="pre">None</span></code> (the
+default), will return <code class="docutils literal notranslate"><span class="pre">default_stats</span></code>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The current values of the requested stats, as a tuple. The order
+of the stats is the same as the names.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)">tuple</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.base.BaseModel.logjacobian">
+<code class="descname">logjacobian</code><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.logjacobian" title="Permalink to this definition">¶</a></dt>
+<dd><p>The log jacobian of the sampling transforms at the current postion.</p>
+<p>If no sampling transforms were provided, will just return 0.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**params</strong> – The keyword arguments should specify values for all of the variable
+args and all of the sampling args.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The value of the jacobian.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.base.BaseModel.loglikelihood">
+<code class="descname">loglikelihood</code><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.loglikelihood" title="Permalink to this definition">¶</a></dt>
+<dd><p>The log likelihood at the current parameters.</p>
+<p>This will initially try to return the <code class="docutils literal notranslate"><span class="pre">current_stats.loglikelihood</span></code>.
+If that raises an <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>, will call <cite>_loglikelihood`</cite> to
+calculate it and store it to <code class="docutils literal notranslate"><span class="pre">current_stats</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.base.BaseModel.logposterior">
+<code class="descname">logposterior</code><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.logposterior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the log of the posterior of the current parameter values.</p>
+<p>The logprior is calculated first. If the logprior returns <code class="docutils literal notranslate"><span class="pre">-inf</span></code>
+(possibly indicating a non-physical point), then the <code class="docutils literal notranslate"><span class="pre">loglikelihood</span></code>
+is not called.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.base.BaseModel.logprior">
+<code class="descname">logprior</code><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.logprior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the log prior at the current parameters.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.base.BaseModel.name">
+<code class="descname">name</code><em class="property"> = None</em><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="pycbc.inference.models.base.BaseModel.prior_from_config">
+<em class="property">static </em><code class="descname">prior_from_config</code><span class="sig-paren">(</span><em>cp</em>, <em>variable_params</em>, <em>prior_section</em>, <em>constraint_section</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/base.html#BaseModel.prior_from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.prior_from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets arguments and keyword arguments from a config file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cp</strong> (<a class="reference internal" href="pycbc.workflow.html#pycbc.workflow.configuration.WorkflowConfigParser" title="pycbc.workflow.configuration.WorkflowConfigParser"><em>WorkflowConfigParser</em></a>) – Config file parser to read.</li>
+<li><strong>variable_params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – List of of model parameter names.</li>
+<li><strong>prior_section</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Section to read prior(s) from.</li>
+<li><strong>constraint_section</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Section to read constraint(s) from.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The prior.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pycbc.distributions.JointDistribution</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.models.base.BaseModel.prior_rvs">
+<code class="descname">prior_rvs</code><span class="sig-paren">(</span><em>size=1</em>, <em>prior=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/base.html#BaseModel.prior_rvs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.prior_rvs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns random variates drawn from the prior.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">sampling_params</span></code> are different from the <code class="docutils literal notranslate"><span class="pre">variable_params</span></code>,
+the variates are transformed to the <cite>sampling_params</cite> parameter space
+before being returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><em>optional</em>) – Number of random values to return for each parameter. Default is 1.</li>
+<li><strong>prior</strong> (<a class="reference internal" href="pycbc.distributions.html#pycbc.distributions.joint.JointDistribution" title="pycbc.distributions.joint.JointDistribution"><em>JointDistribution</em></a><em>, </em><em>optional</em>) – Use the given prior to draw values rather than the saved prior.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A field array of the random values.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="pycbc.io.html#pycbc.io.record.FieldArray" title="pycbc.io.record.FieldArray">FieldArray</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.base.BaseModel.sampling_params">
+<code class="descname">sampling_params</code><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.sampling_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the sampling parameters.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">sampling_transforms</span></code> is None, this is the same as the
+<code class="docutils literal notranslate"><span class="pre">variable_params</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.base.BaseModel.static_params">
+<code class="descname">static_params</code><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.static_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the model’s static arguments.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.models.base.BaseModel.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/base.html#BaseModel.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the current parameter positions and resets stats.</p>
+<p>If any sampling transforms are specified, they are applied to the
+params before being stored.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.base.BaseModel.variable_params">
+<code class="descname">variable_params</code><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.variable_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the model parameters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.models.base.BaseModel.write_metadata">
+<code class="descname">write_metadata</code><span class="sig-paren">(</span><em>fp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/base.html#BaseModel.write_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base.BaseModel.write_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes metadata to the given file handler.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fp</strong> (<em>pycbc.inference.io.BaseInferenceFile instance</em>) – The inference file to write to.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pycbc.inference.models.base.ModelStats">
+<em class="property">class </em><code class="descclassname">pycbc.inference.models.base.</code><code class="descname">ModelStats</code><a class="reference internal" href="_modules/pycbc/inference/models/base.html#ModelStats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base.ModelStats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class to hold model’s current stat values.</p>
+<dl class="method">
+<dt id="pycbc.inference.models.base.ModelStats.getstats">
+<code class="descname">getstats</code><span class="sig-paren">(</span><em>names</em>, <em>default=nan</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/base.html#ModelStats.getstats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base.ModelStats.getstats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the requested stats as a tuple.</p>
+<p>If a requested stat is not an attribute (implying it hasn’t been
+stored), then the default value is returned for that stat.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>names</strong> (<em>list of str</em>) – The names of the stats to get.</li>
+<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – What to return if a requested stat is not an attribute of self.
+Default is <code class="docutils literal notranslate"><span class="pre">numpy.nan</span></code>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A tuple of the requested stats.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)">tuple</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.models.base.ModelStats.getstatsdict">
+<code class="descname">getstatsdict</code><span class="sig-paren">(</span><em>names</em>, <em>default=nan</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/base.html#ModelStats.getstatsdict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base.ModelStats.getstatsdict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the requested stats as a dictionary.</p>
+<p>If a requested stat is not an attribute (implying it hasn’t been
+stored), then the default value is returned for that stat.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>names</strong> (<em>list of str</em>) – The names of the stats to get.</li>
+<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – What to return if a requested stat is not an attribute of self.
+Default is <code class="docutils literal notranslate"><span class="pre">numpy.nan</span></code>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A dictionary of the requested stats.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.base.ModelStats.statnames">
+<code class="descname">statnames</code><a class="headerlink" href="#pycbc.inference.models.base.ModelStats.statnames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the names of the stats that have been stored.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pycbc.inference.models.base.SamplingTransforms">
+<em class="property">class </em><code class="descclassname">pycbc.inference.models.base.</code><code class="descname">SamplingTransforms</code><span class="sig-paren">(</span><em>variable_params</em>, <em>sampling_params</em>, <em>replace_parameters</em>, <em>sampling_transforms</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/base.html#SamplingTransforms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base.SamplingTransforms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Provides methods for transforming between sampling parameter space and
+model parameter space.</p>
+<dl class="method">
+<dt id="pycbc.inference.models.base.SamplingTransforms.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>samples</em>, <em>inverse=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/base.html#SamplingTransforms.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base.SamplingTransforms.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies the sampling transforms to the given samples.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em> or </em><a class="reference internal" href="pycbc.io.html#pycbc.io.record.FieldArray" title="pycbc.io.record.FieldArray"><em>FieldArray</em></a>) – The samples to apply the transforms to.</li>
+<li><strong>inverse</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to apply the inverse transforms (i.e., go from the sampling
+args to the <code class="docutils literal notranslate"><span class="pre">variable_params</span></code>). Default is False.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The transformed samples, along with the original samples.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a> or <a class="reference internal" href="pycbc.io.html#pycbc.io.record.FieldArray" title="pycbc.io.record.FieldArray">FieldArray</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pycbc.inference.models.base.SamplingTransforms.from_config">
+<em class="property">classmethod </em><code class="descname">from_config</code><span class="sig-paren">(</span><em>cp</em>, <em>variable_params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/base.html#SamplingTransforms.from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base.SamplingTransforms.from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets sampling transforms specified in a config file.</p>
+<p>Sampling parameters and the parameters they replace are read from the
+<code class="docutils literal notranslate"><span class="pre">sampling_params</span></code> section, if it exists. Sampling transforms are
+read from the <code class="docutils literal notranslate"><span class="pre">sampling_transforms</span></code> section(s), using
+<code class="docutils literal notranslate"><span class="pre">transforms.read_transforms_from_config</span></code>.</p>
+<p>An <code class="docutils literal notranslate"><span class="pre">AssertionError</span></code> is raised if no <code class="docutils literal notranslate"><span class="pre">sampling_params</span></code> section
+exists in the config file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cp</strong> (<a class="reference internal" href="pycbc.workflow.html#pycbc.workflow.configuration.WorkflowConfigParser" title="pycbc.workflow.configuration.WorkflowConfigParser"><em>WorkflowConfigParser</em></a>) – Config file parser to read.</li>
+<li><strong>variable_params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – List of parameter names of the original variable params.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A sampling transforms class.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pycbc.inference.models.base.SamplingTransforms" title="pycbc.inference.models.base.SamplingTransforms">SamplingTransforms</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.models.base.SamplingTransforms.logjacobian">
+<code class="descname">logjacobian</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/base.html#SamplingTransforms.logjacobian"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base.SamplingTransforms.logjacobian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the log of the jacobian needed to transform pdfs in the
+<code class="docutils literal notranslate"><span class="pre">variable_params</span></code> parameter space to the <code class="docutils literal notranslate"><span class="pre">sampling_params</span></code>
+parameter space.</p>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> be the set of variable parameters,
+<span class="math notranslate nohighlight">\(\mathbf{y} = f(\mathbf{x})\)</span> the set of sampling parameters, and
+<span class="math notranslate nohighlight">\(p_x(\mathbf{x})\)</span> a probability density function defined over
+<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.
+The corresponding pdf in <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is then:</p>
+<div class="math notranslate nohighlight">
+\[p_y(\mathbf{y}) =
+    p_x(\mathbf{x})\left|\mathrm{det}\,\mathbf{J}_{ij}\right|,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{J}_{ij}\)</span> is the Jacobian of the inverse transform
+<span class="math notranslate nohighlight">\(\mathbf{x} = g(\mathbf{y})\)</span>. This has elements:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{J}_{ij} = \frac{\partial g_i}{\partial{y_j}}\]</div>
+<p>This function returns
+<span class="math notranslate nohighlight">\(\log \left|\mathrm{det}\,\mathbf{J}_{ij}\right|\)</span>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**params</strong> – The keyword arguments should specify values for all of the variable
+args and all of the sampling args.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The value of the jacobian.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.inference.models.base.read_sampling_params_from_config">
+<code class="descclassname">pycbc.inference.models.base.</code><code class="descname">read_sampling_params_from_config</code><span class="sig-paren">(</span><em>cp</em>, <em>section_group=None</em>, <em>section='sampling_params'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/base.html#read_sampling_params_from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base.read_sampling_params_from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads sampling parameters from the given config file.</p>
+<p>Parameters are read from the <cite>[({section_group}_){section}]</cite> section.
+The options should list the variable args to transform; the parameters they
+point to should list the parameters they are to be transformed to for
+sampling. If a multiple parameters are transformed together, they should
+be comma separated. Example:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[sampling_params]</span>
+<span class="na">mass1, mass2</span> <span class="o">=</span> <span class="s">mchirp, logitq</span>
+<span class="na">spin1_a</span> <span class="o">=</span> <span class="s">logitspin1_a</span>
+</pre></div>
+</div>
+<p>Note that only the final sampling parameters should be listed, even if
+multiple intermediate transforms are needed. (In the above example, a
+transform is needed to go from mass1, mass2 to mchirp, q, then another one
+needed to go from q to logitq.) These transforms should be specified
+in separate sections; see <code class="docutils literal notranslate"><span class="pre">transforms.read_transforms_from_config</span></code> for
+details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cp</strong> (<a class="reference internal" href="pycbc.workflow.html#pycbc.workflow.configuration.WorkflowConfigParser" title="pycbc.workflow.configuration.WorkflowConfigParser"><em>WorkflowConfigParser</em></a>) – An open config parser to read from.</li>
+<li><strong>section_group</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – Append <cite>{section_group}_</cite> to the section name. Default is None.</li>
+<li><strong>section</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – The name of the section. Default is ‘sampling_params’.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>sampling_params</strong> (<em>list</em>) – The list of sampling parameters to use instead.</li>
+<li><strong>replaced_params</strong> (<em>list</em>) – The list of variable args to replace in the sampler.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pycbc.inference.models.base_data">
+<span id="pycbc-inference-models-base-data-module"></span><h2>pycbc.inference.models.base_data module<a class="headerlink" href="#module-pycbc.inference.models.base_data" title="Permalink to this headline">¶</a></h2>
+<p>Base classes for models with data.</p>
+<dl class="class">
+<dt id="pycbc.inference.models.base_data.BaseDataModel">
+<em class="property">class </em><code class="descclassname">pycbc.inference.models.base_data.</code><code class="descname">BaseDataModel</code><span class="sig-paren">(</span><em>variable_params</em>, <em>data</em>, <em>recalibration=None</em>, <em>gates=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/base_data.html#BaseDataModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base_data.BaseDataModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.models.base.BaseModel" title="pycbc.inference.models.base.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.models.base.BaseModel</span></code></a></p>
+<p>Base class for models that require data and a waveform generator.</p>
+<p>This adds propeties for the log of the likelihood that the data contain
+noise, <code class="docutils literal notranslate"><span class="pre">lognl</span></code>, and the log likelihood ratio <code class="docutils literal notranslate"><span class="pre">loglr</span></code>.</p>
+<p>Classes that inherit from this class must define <code class="docutils literal notranslate"><span class="pre">_loglr</span></code> and <code class="docutils literal notranslate"><span class="pre">_lognl</span></code>
+functions, in addition to the <code class="docutils literal notranslate"><span class="pre">_loglikelihood</span></code> requirement inherited from
+<code class="docutils literal notranslate"><span class="pre">BaseModel</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>variable_params</strong> (<em>(</em><em>tuple of</em><em>) </em><em>string</em><em>(</em><em>s</em><em>)</em>) – A tuple of parameter names that will be varied.</li>
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – A dictionary of data, in which the keys are the detector names and the
+values are the data.</li>
+<li><strong>recalibration</strong> (<em>dict of pycbc.calibration.Recalibrate</em><em>, </em><em>optional</em>) – Dictionary of detectors -&gt; recalibration class instances for
+recalibrating data.</li>
+<li><strong>gates</strong> (<em>dict of tuples</em><em>, </em><em>optional</em>) – Dictionary of detectors -&gt; tuples of specifying gate times. The
+sort of thing returned by <cite>pycbc.gate.gates_from_cli</cite>.</li>
+<li><strong>**kwargs</strong> – All other keyword arguments are passed to <code class="docutils literal notranslate"><span class="pre">BaseModel</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="pycbc.inference.models.base_data.BaseDataModel.data">
+<code class="descname">data</code><a class="headerlink" href="#pycbc.inference.models.base_data.BaseDataModel.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data that the class was initialized with.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.base_data.BaseDataModel.lognl">
+<code class="descname">lognl</code><a class="headerlink" href="#pycbc.inference.models.base_data.BaseDataModel.lognl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the log likelihood of the noise.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.base_data.BaseDataModel.loglr">
+<code class="descname">loglr</code><a class="headerlink" href="#pycbc.inference.models.base_data.BaseDataModel.loglr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the log of the likelihood ratio.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.base_data.BaseDataModel.logplr">
+<code class="descname">logplr</code><a class="headerlink" href="#pycbc.inference.models.base_data.BaseDataModel.logplr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the log of the prior-weighted likelihood ratio.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">See ``BaseModel`` for additional attributes and properties.</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">data</code></dt>
+<dd><p>Dictionary mapping detector names to data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.base_data.BaseDataModel.detectors">
+<code class="descname">detectors</code><a class="headerlink" href="#pycbc.inference.models.base_data.BaseDataModel.detectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the detectors used.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">loglr</code></dt>
+<dd><p>The log likelihood ratio at the current parameters.</p>
+<p>This will initially try to return the <code class="docutils literal notranslate"><span class="pre">current_stats.loglr</span></code>.
+If that raises an <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>, will call <cite>_loglr`</cite> to
+calculate it and store it to <code class="docutils literal notranslate"><span class="pre">current_stats</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">lognl</code></dt>
+<dd><p>The log likelihood of the model assuming the data is noise.</p>
+<p>This will initially try to return the <code class="docutils literal notranslate"><span class="pre">current_stats.lognl</span></code>.
+If that raises an <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>, will call <cite>_lognl`</cite> to
+calculate it and store it to <code class="docutils literal notranslate"><span class="pre">current_stats</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">logplr</code></dt>
+<dd><p>Returns the log of the prior-weighted likelihood ratio at the
+current parameter values.</p>
+<p>The logprior is calculated first. If the logprior returns <code class="docutils literal notranslate"><span class="pre">-inf</span></code>
+(possibly indicating a non-physical point), then <code class="docutils literal notranslate"><span class="pre">loglr</span></code> is not
+called.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.models.base_data.BaseDataModel.write_metadata">
+<code class="descname">write_metadata</code><span class="sig-paren">(</span><em>fp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/base_data.html#BaseDataModel.write_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.base_data.BaseDataModel.write_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds data to the metadata that’s written.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fp</strong> (<em>pycbc.inference.io.BaseInferenceFile instance</em>) – The inference file to write to.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pycbc.inference.models.gaussian_noise">
+<span id="pycbc-inference-models-gaussian-noise-module"></span><h2>pycbc.inference.models.gaussian_noise module<a class="headerlink" href="#module-pycbc.inference.models.gaussian_noise" title="Permalink to this headline">¶</a></h2>
+<p>This module provides model classes that assume the noise is Gaussian.</p>
+<dl class="class">
+<dt id="pycbc.inference.models.gaussian_noise.GaussianNoise">
+<em class="property">class </em><code class="descclassname">pycbc.inference.models.gaussian_noise.</code><code class="descname">GaussianNoise</code><span class="sig-paren">(</span><em>variable_params</em>, <em>data</em>, <em>low_frequency_cutoff</em>, <em>psds=None</em>, <em>high_frequency_cutoff=None</em>, <em>static_params=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/gaussian_noise.html#GaussianNoise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.GaussianNoise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.models.base_data.BaseDataModel" title="pycbc.inference.models.base_data.BaseDataModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.models.base_data.BaseDataModel</span></code></a></p>
+<p>Model that assumes data is stationary Gaussian noise.</p>
+<p>With Gaussian noise the log likelihood functions for signal
+<span class="math notranslate nohighlight">\(\log p(d|\Theta, h)\)</span> and for noise <span class="math notranslate nohighlight">\(\log p(d|n)\)</span> are given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\log p(d|\Theta, h) &amp;=  \log\alpha -\frac{1}{2} \sum_i
+    \left&lt; d_i - h_i(\Theta) | d_i - h_i(\Theta) \right&gt; \\
+\log p(d|n) &amp;= -\log\alpha -\frac{1}{2} \sum_i \left&lt;d_i | d_i\right&gt;\end{split}\]</div>
+<p>where the sum is over the number of detectors, <span class="math notranslate nohighlight">\(d_i\)</span> is the data in
+each detector, and <span class="math notranslate nohighlight">\(h_i(\Theta)\)</span> is the model signal in each
+detector. The (discrete) inner product is given by:</p>
+<div class="math notranslate nohighlight">
+\[\left&lt;a_i | b_i\right&gt; = 4\Re \delta f
+    \sum_{k=k_{\mathrm{min}}}^{k_{\mathrm{max}}}
+    \frac{\tilde{a}_i^{*}[k] \tilde{b}_i[k]}{S^(i)_n[k]},\]</div>
+<p>where <span class="math notranslate nohighlight">\(\delta f\)</span> is the frequency resolution (given by 1 / the
+observation time <span class="math notranslate nohighlight">\(T\)</span>), <span class="math notranslate nohighlight">\(k\)</span> is an index over the discretely
+sampled frequencies <span class="math notranslate nohighlight">\(f = k \delta_f\)</span>, and <span class="math notranslate nohighlight">\(S^(i)_n[k]\)</span> is the
+PSD in the given detector. The upper cutoff on the inner product
+<span class="math notranslate nohighlight">\(k_{\mathrm{max}}\)</span> is by default the Nyquist frequency
+<cite>k_{mathrm{max}} = N/2+1</cite>, where <span class="math notranslate nohighlight">\(N = \lfloor T/\delta t \rfloor\)</span>
+is the number of samples in the time domain, but this can be set manually
+to a smaller value.</p>
+<p>The normalization factor <span class="math notranslate nohighlight">\(\alpha\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[\alpha = \frac{1}{\left(\pi T\right)^{N/2}
+    \prod_{k=k_\mathrm{min}}^{k_{\mathrm{max}}} S_n[k]}.\]</div>
+<p>Note that the log likelihood ratio has fewer terms than the log likelihood,
+since the normalization and <span class="math notranslate nohighlight">\(\left&lt;d_i|d_i\right&gt;\)</span> terms cancel:</p>
+<div class="math notranslate nohighlight">
+\[\log \mathcal{L}(\Theta) = \sum_i \left[
+    \left&lt;h_i(\Theta)|d_i\right&gt; -
+    \frac{1}{2} \left&lt;h_i(\Theta)|h_i(\Theta)\right&gt; \right]\]</div>
+<p>Upon initialization, the data is whitened using the given PSDs. If no PSDs
+are given the data and waveforms returned by the waveform generator are
+assumed to be whitened.</p>
+<p>For more details on initialization parameters and definition of terms, see
+<code class="xref py py-class docutils literal notranslate"><span class="pre">models.BaseDataModel</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>variable_params</strong> (<em>(</em><em>tuple of</em><em>) </em><em>string</em><em>(</em><em>s</em><em>)</em>) – A tuple of parameter names that will be varied.</li>
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – A dictionary of data, in which the keys are the detector names and the
+values are the data (assumed to be unwhitened). The list of keys must
+match the waveform generator’s detectors keys, and the epoch of every
+data set must be the same as the waveform generator’s epoch.</li>
+<li><strong>low_frequency_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – A dictionary of starting frequencies, in which the keys are the
+detector names and the values are the starting frequencies for the
+respective detectors to be used for computing inner products.</li>
+<li><strong>psds</strong> (<em>{None</em><em>, </em><em>dict}</em>) – A dictionary of FrequencySeries keyed by the detector names. The
+dictionary must have a psd for each detector specified in the data
+dictionary. If provided, the inner products in each detector will be
+weighted by 1/psd of that detector.</li>
+<li><strong>high_frequency_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>, </em><em>optional</em>) – A dictionary of ending frequencies, in which the keys are the
+detector names and the values are the ending frequencies for the
+respective detectors to be used for computing inner products. If not
+provided, the minimum of the largest frequency stored in the data
+and a given waveform will be used.</li>
+<li><strong>static_params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>, </em><em>optional</em>) – A dictionary of parameter names -&gt; values to keep fixed.</li>
+<li><strong>**kwargs</strong> – All other keyword arguments are passed to <code class="docutils literal notranslate"><span class="pre">BaseDataModel</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Create a signal, and set up the model using that signal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pycbc</span> <span class="k">import</span> <span class="n">psd</span> <span class="k">as</span> <span class="n">pypsd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pycbc.inference.models</span> <span class="k">import</span> <span class="n">GaussianNoise</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pycbc.waveform.generator</span> <span class="k">import</span> <span class="p">(</span><span class="n">FDomainDetFrameGenerator</span><span class="p">,</span>
+<span class="gp">... </span>                                      <span class="n">FDomainCBCGenerator</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seglen</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sample_rate</span> <span class="o">=</span> <span class="mi">2048</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">N</span> <span class="o">=</span> <span class="n">seglen</span><span class="o">*</span><span class="n">sample_rate</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fmin</span> <span class="o">=</span> <span class="mf">30.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">static_params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;approximant&#39;</span><span class="p">:</span> <span class="s1">&#39;IMRPhenomD&#39;</span><span class="p">,</span> <span class="s1">&#39;f_lower&#39;</span><span class="p">:</span> <span class="n">fmin</span><span class="p">,</span>
+<span class="gp">... </span>                 <span class="s1">&#39;mass1&#39;</span><span class="p">:</span> <span class="mf">38.6</span><span class="p">,</span> <span class="s1">&#39;mass2&#39;</span><span class="p">:</span> <span class="mf">29.3</span><span class="p">,</span>
+<span class="gp">... </span>                 <span class="s1">&#39;spin1z&#39;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span> <span class="s1">&#39;spin2z&#39;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span> <span class="s1">&#39;ra&#39;</span><span class="p">:</span> <span class="mf">1.37</span><span class="p">,</span> <span class="s1">&#39;dec&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.26</span><span class="p">,</span>
+<span class="gp">... </span>                 <span class="s1">&#39;polarization&#39;</span><span class="p">:</span> <span class="mf">2.76</span><span class="p">,</span> <span class="s1">&#39;distance&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="o">*</span><span class="mf">500.</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">variable_params</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tc&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tsig</span> <span class="o">=</span> <span class="mf">3.1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">FDomainDetFrameGenerator</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">FDomainCBCGenerator</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">detectors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">variable_args</span><span class="o">=</span><span class="n">variable_params</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">delta_f</span><span class="o">=</span><span class="mf">1.</span><span class="o">/</span><span class="n">seglen</span><span class="p">,</span> <span class="o">**</span><span class="n">static_params</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">signal</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">tc</span><span class="o">=</span><span class="n">tsig</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">psd</span> <span class="o">=</span> <span class="n">pypsd</span><span class="o">.</span><span class="n">aLIGOZeroDetHighPower</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mf">1.</span><span class="o">/</span><span class="n">seglen</span><span class="p">,</span> <span class="mf">20.</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">psds</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;H1&#39;</span><span class="p">:</span> <span class="n">psd</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">:</span> <span class="n">psd</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">low_frequency_cutoff</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;H1&#39;</span><span class="p">:</span> <span class="n">fmin</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">:</span> <span class="n">fmin</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">GaussianNoise</span><span class="p">(</span><span class="n">variable_params</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="n">low_frequency_cutoff</span><span class="p">,</span>
+<span class="go">                          psds=psds, static_params=static_params)</span>
+</pre></div>
+</div>
+<p>Set the current position to the coalescence time of the signal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tc</span><span class="o">=</span><span class="n">tsig</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now compute the log likelihood ratio and prior-weighted likelihood ratio;
+since we have not provided a prior, these should be equal to each other:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">loglr</span><span class="p">))</span>
+<span class="go">282.43</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">logplr</span><span class="p">))</span>
+<span class="go">282.43</span>
+</pre></div>
+</div>
+<p>Print all of the default_stats:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;,</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+<span class="gp">... </span>                  <span class="k">for</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">current_stats</span><span class="o">.</span><span class="n">items</span><span class="p">())]))</span>
+<span class="go">H1_cplx_loglr: 177.76+0.00j,</span>
+<span class="go">H1_optimal_snrsq: 355.52,</span>
+<span class="go">L1_cplx_loglr: 104.67+0.00j,</span>
+<span class="go">L1_optimal_snrsq: 209.35,</span>
+<span class="go">logjacobian: nan,</span>
+<span class="go">loglikelihood: 835680.31,</span>
+<span class="go">loglr: 282.43,</span>
+<span class="go">logprior: nan</span>
+</pre></div>
+</div>
+<p>Compute the SNR; for this system and PSD, this should be approximately 24:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pycbc.conversions</span> <span class="k">import</span> <span class="n">snr_from_loglr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">snr_from_loglr</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">loglr</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="go">23.77</span>
+</pre></div>
+</div>
+<p>Since there is no noise, the SNR should be the same as the quadrature sum
+of the optimal SNRs in each detector:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">det_optimal_snrsq</span><span class="p">(</span><span class="s1">&#39;H1&#39;</span><span class="p">)</span> <span class="o">+</span>
+<span class="gp">... </span>     <span class="n">model</span><span class="o">.</span><span class="n">det_optimal_snrsq</span><span class="p">(</span><span class="s1">&#39;L1&#39;</span><span class="p">))</span><span class="o">**</span><span class="mf">0.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="go">23.77</span>
+</pre></div>
+</div>
+<p>Using the same model, evaluate the log likelihood ratio at several points
+in time and check that the max is at tsig:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">times</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">tsig</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">tsig</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">101</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loglrs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="p">(</span><span class="n">ii</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tc</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">loglrs</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">loglr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;tsig: </span><span class="si">{:.2f}</span><span class="s1">, time of max loglr: </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">tsig</span><span class="p">,</span> <span class="n">times</span><span class="p">[</span><span class="n">loglrs</span><span class="o">.</span><span class="n">argmax</span><span class="p">()]))</span>
+<span class="go">tsig: 3.10, time of max loglr: 3.10</span>
+</pre></div>
+</div>
+<p>Create a prior and use it (see distributions module for more details):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pycbc</span> <span class="k">import</span> <span class="n">distributions</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">uniform_prior</span> <span class="o">=</span> <span class="n">distributions</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="n">tc</span><span class="o">=</span><span class="p">(</span><span class="n">tsig</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span><span class="n">tsig</span><span class="o">+</span><span class="mf">0.2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prior</span> <span class="o">=</span> <span class="n">distributions</span><span class="o">.</span><span class="n">JointDistribution</span><span class="p">(</span><span class="n">variable_params</span><span class="p">,</span> <span class="n">uniform_prior</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">pycbc</span><span class="o">.</span><span class="n">inference</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">GaussianNoise</span><span class="p">(</span><span class="n">variable_params</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">signal</span><span class="p">,</span> <span class="n">low_frequency_cutoff</span><span class="p">,</span> <span class="n">psds</span><span class="o">=</span><span class="n">psds</span><span class="p">,</span> <span class="n">prior</span><span class="o">=</span><span class="n">prior</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">static_params</span><span class="o">=</span><span class="n">static_params</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tc</span><span class="o">=</span><span class="n">tsig</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">logplr</span><span class="p">))</span>
+<span class="go">283.35</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;,</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+<span class="gp">... </span>                  <span class="k">for</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">current_stats</span><span class="o">.</span><span class="n">items</span><span class="p">())]))</span>
+<span class="go">H1_cplx_loglr: 177.76+0.00j,</span>
+<span class="go">H1_optimal_snrsq: 355.52,</span>
+<span class="go">L1_cplx_loglr: 104.67+0.00j,</span>
+<span class="go">L1_optimal_snrsq: 209.35,</span>
+<span class="go">logjacobian: 0.00,</span>
+<span class="go">loglikelihood: 835680.31,</span>
+<span class="go">loglr: 282.43,</span>
+<span class="go">logprior: 0.92</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="pycbc.inference.models.gaussian_noise.GaussianNoise.det_cplx_loglr">
+<code class="descname">det_cplx_loglr</code><span class="sig-paren">(</span><em>det</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/gaussian_noise.html#GaussianNoise.det_cplx_loglr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.GaussianNoise.det_cplx_loglr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the complex log likelihood ratio in the given detector.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>det</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the detector.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The complex log likelihood ratio.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">complex float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.models.gaussian_noise.GaussianNoise.det_lognl">
+<code class="descname">det_lognl</code><span class="sig-paren">(</span><em>det</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/gaussian_noise.html#GaussianNoise.det_lognl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.GaussianNoise.det_lognl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the log likelihood of the noise in the given detector:</p>
+<div class="math notranslate nohighlight">
+\[\log p(d_i|n_i) = \log \alpha_i -
+    \frac{1}{2} \left&lt;d_i | d_i\right&gt;.\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>det</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the detector.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The log likelihood of the noise in the requested detector.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.models.gaussian_noise.GaussianNoise.det_lognorm">
+<code class="descname">det_lognorm</code><span class="sig-paren">(</span><em>det</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/gaussian_noise.html#GaussianNoise.det_lognorm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.GaussianNoise.det_lognorm" title="Permalink to this definition">¶</a></dt>
+<dd><p>The log of the likelihood normalization in the given detector.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.models.gaussian_noise.GaussianNoise.det_optimal_snrsq">
+<code class="descname">det_optimal_snrsq</code><span class="sig-paren">(</span><em>det</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/gaussian_noise.html#GaussianNoise.det_optimal_snrsq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.GaussianNoise.det_optimal_snrsq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the opitmal SNR squared in the given detector.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>det</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the detector.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The opimtal SNR squared.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pycbc.inference.models.gaussian_noise.GaussianNoise.from_config">
+<em class="property">classmethod </em><code class="descname">from_config</code><span class="sig-paren">(</span><em>cp</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/gaussian_noise.html#GaussianNoise.from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.GaussianNoise.from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes an instance of this class from the given config file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cp</strong> (<a class="reference internal" href="pycbc.workflow.html#pycbc.workflow.configuration.WorkflowConfigParser" title="pycbc.workflow.configuration.WorkflowConfigParser"><em>WorkflowConfigParser</em></a>) – Config file parser to read.</li>
+<li><strong>**kwargs</strong> – All additional keyword arguments are passed to the class. Any
+provided keyword will over ride what is in the config file.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.gaussian_noise.GaussianNoise.high_frequency_cutoff">
+<code class="descname">high_frequency_cutoff</code><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.GaussianNoise.high_frequency_cutoff" title="Permalink to this definition">¶</a></dt>
+<dd><p>The high frequency cutoff of the inner product.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.gaussian_noise.GaussianNoise.lognorm">
+<code class="descname">lognorm</code><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.GaussianNoise.lognorm" title="Permalink to this definition">¶</a></dt>
+<dd><p>The log of the normalization of the log likelihood.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.gaussian_noise.GaussianNoise.low_frequency_cutoff">
+<code class="descname">low_frequency_cutoff</code><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.GaussianNoise.low_frequency_cutoff" title="Permalink to this definition">¶</a></dt>
+<dd><p>The low frequency cutoff of the inner product.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.gaussian_noise.GaussianNoise.name">
+<code class="descname">name</code><em class="property"> = 'gaussian_noise'</em><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.GaussianNoise.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.gaussian_noise.GaussianNoise.psds">
+<code class="descname">psds</code><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.GaussianNoise.psds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the psds that are set.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.gaussian_noise.GaussianNoise.waveform_generator">
+<code class="descname">waveform_generator</code><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.GaussianNoise.waveform_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>The waveform generator used.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pycbc.inference.models.gaussian_noise.GaussianNoise.write_metadata">
+<code class="descname">write_metadata</code><span class="sig-paren">(</span><em>fp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/gaussian_noise.html#GaussianNoise.write_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.GaussianNoise.write_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds writing the psds and lognl, since it’s a constant.</p>
+<p>The lognl is written to the sample group’s <code class="docutils literal notranslate"><span class="pre">attrs</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fp</strong> (<em>pycbc.inference.io.BaseInferenceFile instance</em>) – The inference file to write to.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.inference.models.gaussian_noise.create_waveform_generator">
+<code class="descclassname">pycbc.inference.models.gaussian_noise.</code><code class="descname">create_waveform_generator</code><span class="sig-paren">(</span><em>variable_params</em>, <em>data</em>, <em>recalibration=None</em>, <em>gates=None</em>, <em>**static_params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/gaussian_noise.html#create_waveform_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.create_waveform_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a waveform generator for use with a model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>variable_params</strong> (<em>list of str</em>) – The names of the parameters varied.</li>
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – Dictionary mapping detector names to either a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">&lt;pycbc.types.TimeSeries</span> <span class="pre">TimeSeries&gt;</span></code> or
+<code class="xref py py-class docutils literal notranslate"><span class="pre">&lt;pycbc.types.FrequencySeries</span> <span class="pre">FrequencySeries&gt;</span></code>.</li>
+<li><strong>recalibration</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>, </em><em>optional</em>) – Dictionary mapping detector names to
+<code class="xref py py-class docutils literal notranslate"><span class="pre">&lt;pycbc.calibration.Recalibrate&gt;</span></code> instances for
+recalibrating data.</li>
+<li><strong>gates</strong> (<em>dict of tuples</em><em>, </em><em>optional</em>) – Dictionary of detectors -&gt; tuples of specifying gate times. The
+sort of thing returned by <code class="xref py py-func docutils literal notranslate"><span class="pre">pycbc.gate.gates_from_cli()</span></code>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A waveform generator for frequency domain generation.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pycbc.waveform.FDomainDetFrameGenerator</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.inference.models.gaussian_noise.high_frequency_cutoff_from_config">
+<code class="descclassname">pycbc.inference.models.gaussian_noise.</code><code class="descname">high_frequency_cutoff_from_config</code><span class="sig-paren">(</span><em>cp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/gaussian_noise.html#high_frequency_cutoff_from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.high_frequency_cutoff_from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the high frequency cutoff, if one is provided for a detector from
+the given config file for likelihood computation.</p>
+<p>This looks for options <code class="docutils literal notranslate"><span class="pre">IFO-high-frequency-cutoff</span></code> in the <code class="docutils literal notranslate"><span class="pre">[model]</span></code>
+section, where IFO is the name of the detector, and casts it to float.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cp</strong> (<a class="reference internal" href="pycbc.workflow.html#pycbc.workflow.configuration.WorkflowConfigParser" title="pycbc.workflow.configuration.WorkflowConfigParser"><em>WorkflowConfigParser</em></a>) – Config file parser to read.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Dictionary with the IFO names as the keys and the respective high
+frequency cutoffs to be used in the likelihood calculation as the
+values. If high frequency cutoffs for no detectors are provided,
+returns an empty dictionary.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)">None</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.inference.models.gaussian_noise.low_frequency_cutoff_from_config">
+<code class="descclassname">pycbc.inference.models.gaussian_noise.</code><code class="descname">low_frequency_cutoff_from_config</code><span class="sig-paren">(</span><em>cp</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/gaussian_noise.html#low_frequency_cutoff_from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.gaussian_noise.low_frequency_cutoff_from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the low frequency cutoff for all detectors to be used from the
+given config file.</p>
+<p>The low-frequency-cutoff for each detector should be provided using an
+option <code class="docutils literal notranslate"><span class="pre">IFO-low-frequency-cutoff</span></code> in the <code class="docutils literal notranslate"><span class="pre">[model]</span></code> section, where IFO
+is the name of the detector. The low frequency cutoff value is then casted
+to float. If the casting to float fails, an error is raised.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cp</strong> (<a class="reference internal" href="pycbc.workflow.html#pycbc.workflow.configuration.WorkflowConfigParser" title="pycbc.workflow.configuration.WorkflowConfigParser"><em>WorkflowConfigParser</em></a>) – Config file parser to read.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Dictionary with the IFO names as the keys and the respective low
+frequency cutoffs to be used in the likelihood calculation as the
+values.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pycbc.inference.models.marginalized_gaussian_noise">
+<span id="pycbc-inference-models-marginalized-gaussian-noise-module"></span><h2>pycbc.inference.models.marginalized_gaussian_noise module<a class="headerlink" href="#module-pycbc.inference.models.marginalized_gaussian_noise" title="Permalink to this headline">¶</a></h2>
+<p>This module provides model classes that assume the noise is Gaussian and
+allows for the likelihood to be marginalized over phase and/or time and/or
+distance.</p>
+<dl class="class">
+<dt id="pycbc.inference.models.marginalized_gaussian_noise.MarginalizedGaussianNoise">
+<em class="property">class </em><code class="descclassname">pycbc.inference.models.marginalized_gaussian_noise.</code><code class="descname">MarginalizedGaussianNoise</code><span class="sig-paren">(</span><em>variable_params</em>, <em>data</em>, <em>waveform_generator</em>, <em>f_lower</em>, <em>psds=None</em>, <em>f_upper=None</em>, <em>norm=None</em>, <em>time_marginalization=False</em>, <em>distance_marginalization=False</em>, <em>phase_marginalization=False</em>, <em>marg_prior=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/marginalized_gaussian_noise.html#MarginalizedGaussianNoise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.marginalized_gaussian_noise.MarginalizedGaussianNoise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.models.gaussian_noise.GaussianNoise" title="pycbc.inference.models.gaussian_noise.GaussianNoise"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.models.gaussian_noise.GaussianNoise</span></code></a></p>
+<p>The likelihood is analytically marginalized over phase and/or time
+and/or distance.</p>
+<p>For the case of marginalizing over phase, the signal, can be written as:</p>
+<div class="math notranslate nohighlight">
+\[\tilde{h}(f; \Theta, \phi) = A(f; \Theta)e^{i\Psi(f; \Theta) + i \phi},\]</div>
+<p>where <span class="math notranslate nohighlight">\(\phi\)</span> is an arbitrary phase constant. This phase constant
+can be analytically marginalized over with a uniform prior as follows:
+assuming the noise is stationary and Gaussian (see <cite>GaussianNoise</cite>
+for details), the posterior is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}p(\Theta,\phi|d)
+    &amp;\propto p(\Theta)p(\phi)p(d|\Theta,\phi) \\
+    &amp;\propto p(\Theta)\frac{1}{2\pi}\exp\left[
+        -\frac{1}{2}\sum_{i}^{N_D} \left&lt;
+            h_i(\Theta,\phi) - d_i, h_i(\Theta,\phi) - d_i
+        \right&gt;\right].\end{split}\]</div>
+<p>Here, the sum is over the number of detectors <span class="math notranslate nohighlight">\(N_D\)</span>, <span class="math notranslate nohighlight">\(d_i\)</span>
+and <span class="math notranslate nohighlight">\(h_i\)</span> are the data and signal in detector <span class="math notranslate nohighlight">\(i\)</span>,
+respectively, and we have assumed a uniform prior on <span class="math notranslate nohighlight">\(phi \in [0,
+2\pi)\)</span>. With the form of the signal model given above, the inner product
+in the exponent can be written as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}-\frac{1}{2}\left&lt;h_i - d_i, h_i- d_i\right&gt;
+    &amp;= \left&lt;h_i, d_i\right&gt; -
+       \frac{1}{2}\left&lt;h_i, h_i\right&gt; -
+       \frac{1}{2}\left&lt;d_i, d_i\right&gt; \\
+    &amp;= \Re\left\{O(h^0_i, d_i)e^{-i\phi}\right\} -
+       \frac{1}{2}\left&lt;h^0_i, h^0_i\right&gt; -
+       \frac{1}{2}\left&lt;d_i, d_i\right&gt;,\end{split}\]</div>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}h_i^0 &amp;\equiv \tilde{h}_i(f; \Theta, \phi=0); \\
+O(h^0_i, d_i) &amp;\equiv 4 \int_0^\infty
+    \frac{\tilde{h}_i^*(f; \Theta,0)\tilde{d}_i(f)}{S_n(f)}\mathrm{d}f.\end{split}\]</div>
+<p>Gathering all of the terms that are not dependent on <span class="math notranslate nohighlight">\(\phi\)</span> together:</p>
+<div class="math notranslate nohighlight">
+\[\alpha(\Theta, d) \equiv \exp\left[-\frac{1}{2}\sum_i
+    \left&lt;h^0_i, h^0_i\right&gt; + \left&lt;d_i, d_i\right&gt;\right],\]</div>
+<p>we can marginalize the posterior over <span class="math notranslate nohighlight">\(\phi\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}p(\Theta|d)
+    &amp;\propto p(\Theta)\alpha(\Theta,d)\frac{1}{2\pi}
+             \int_{0}^{2\pi}\exp\left[\Re \left\{
+                 e^{-i\phi} \sum_i O(h^0_i, d_i)
+             \right\}\right]\mathrm{d}\phi \\
+    &amp;\propto p(\Theta)\alpha(\Theta, d)\frac{1}{2\pi}
+             \int_{0}^{2\pi}\exp\left[
+                 x(\Theta,d)\cos(\phi) + y(\Theta, d)\sin(\phi)
+             \right]\mathrm{d}\phi.\end{split}\]</div>
+<p>The integral in the last line is equal to <span class="math notranslate nohighlight">\(2\pi I_0(\sqrt{x^2+y^2})\)</span>,
+where <span class="math notranslate nohighlight">\(I_0\)</span> is the modified Bessel function of the first kind. Thus
+the marginalized log posterior is:</p>
+<div class="math notranslate nohighlight">
+\[\log p(\Theta|d) \propto \log p(\Theta) +
+    I_0\left(\left|\sum_i O(h^0_i, d_i)\right|\right) -
+    \frac{1}{2}\sum_i\left[ \left&lt;h^0_i, h^0_i\right&gt; -
+                            \left&lt;d_i, d_i\right&gt; \right]\]</div>
+<p>For the case of marginalizing over distance, the signal can be written as,</p>
+<div class="math notranslate nohighlight">
+\[\tilde{h}_{j} = \frac{1}{D} \tilde{h}_{j}^{0}\]</div>
+<p>The distance can be analytically marginalized over with a uniform prior as
+follows:
+assuming the noise is stationary and Gaussian (see <cite>GaussianNoise</cite>
+for details), the likelihood is:</p>
+<div class="math notranslate nohighlight">
+\[log L = -\frac{1}{2}\left&lt;d-h|d-h\right&gt;\]</div>
+<p>We see that :math: <cite>&lt;h|h&gt;</cite> is inversely proportional to distance squared
+and :math: <cite>&lt;h|d&gt;</cite> is inversely proportional to distance. The log
+likelihood is therefore</p>
+<div class="math notranslate nohighlight">
+\[\log L = -\frac{1}{2}\left&lt;d|d\right&gt; - \frac{1}{2D^{2}}
+          \left&lt;h|h\right&gt; + \frac{1}{D}\left&lt;h|d\right&gt;\]</div>
+<p>Consequently, the likelihood marginalised over distance is simply</p>
+<div class="math notranslate nohighlight">
+\[\log L = \log\left(\int_{0}^{D}{L p(D) dD}\right)\]</div>
+<p>If we assume a flat prior</p>
+<div class="math notranslate nohighlight">
+\[\log L = \log\left(\int_{0}^{D}{\exp{\log L} dD}\right)\]</div>
+<p>For the case of marginalizing over time, the signal can be written as,</p>
+<div class="math notranslate nohighlight">
+\[\tilde{h}_{j} = \tilde{h}_{j}^{0} \exp\left(-2\pi ij\Delta ft\right)\]</div>
+<p>The time can be analytically marginalized over with a uniform prior as
+follows:
+assuming the noise is stationary and Gaussian (see <cite>GaussianNoise</cite>
+for details), the likelihood is:</p>
+<div class="math notranslate nohighlight">
+\[\log L = -\frac{1}{2}\left&lt;d-h|d-h\right&gt;\]</div>
+<p>We note that :math: <cite>&lt;h|h&gt;</cite> and :math: <cite>&lt;d|d&gt;</cite> are time independent while
+:math: <cite>&lt;d|h&gt;</cite> is dependent of time</p>
+<div class="math notranslate nohighlight">
+\[\left&lt;d|h\right&gt;(t) = 4\Delta f\sum_{j=0}^{N/2} \frac{\tilde{d}_{j}^{*}
+                      \tilde{h}_{j}^{0}}{S_{j}} \exp\left(-2\pi ij
+                      \Delta f t\right)\]</div>
+<p>For integer timesteps :math: <cite>t=kDelta t</cite></p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\left&lt;d|h\right&gt;(k\Delta t) = 4\Delta f\sum_{j=0}^{N/2} \frac{
+                              \tilde{d}_{j}^{*}\tilde{h}_{j}^{0}}
+                              {S_{j}}\exp(-2\pi \frac{ijk}{N}\\\left&lt;d|h\right&gt;(k\Delta t) = 2\Delta f\sum_{j=0}^{N} \frac{
+                              \tilde{d}_{j}^{*}\tilde{h}_{j}^{0}}
+                              {S_{j}} \exp(-2\pi \frac{ijk}{N}\end{aligned}\end{align} \]</div>
+<p>Using a FFT, this expression can be evaluated efficiently for all :math:
+<cite>k</cite></p>
+<div class="math notranslate nohighlight">
+\[\left&lt;d|h\right&gt;(k\Delta t) = 2\Delta f FFT_{k} (\frac{dh}{S})\]</div>
+<p>since :math:: <cite>left&lt;h|dright&gt; = left&lt;d|hright&gt;^{*}</cite>,</p>
+<div class="math notranslate nohighlight">
+\[\left&lt;d|h\right&gt; + \left&lt;h|d\right&gt; = 4\Delta f FFT_{k} (\frac{dh}{S})\]</div>
+<p>and so the likelihood marginalised over time is simply</p>
+<div class="math notranslate nohighlight">
+\[\log{L} = \log\left(\int_{0}^{T} np.exp(\np.log(L) p(t))\right)\]</div>
+<p>where p(t) is the prior. If we assume a flat prior then,</p>
+<div class="math notranslate nohighlight">
+\[\log{L} = \log\left(\int_{0}^{T} np.exp(\np.log(L))\right)\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>time_marginalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – A Boolean operator which determines if the likelihood is marginalized
+over time</li>
+<li><strong>phase_marginalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – A Boolean operator which determines if the likelihood is marginalized
+over phase</li>
+<li><strong>distance_marginalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – A Boolean operator which determines if the likelihood is marginalized
+over distance</li>
+<li><strong>marg_prior</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em>, </em><em>optional</em>) – An instance of pycbc.distributions which returns a list of prior
+distributions to be used when marginalizing the likelihood</li>
+<li><strong>**kwargs</strong> – All other keyword arguments are passed to <code class="docutils literal notranslate"><span class="pre">GaussianNoise</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="classmethod">
+<dt id="pycbc.inference.models.marginalized_gaussian_noise.MarginalizedGaussianNoise.from_config">
+<em class="property">classmethod </em><code class="descname">from_config</code><span class="sig-paren">(</span><em>cp</em>, <em>data=None</em>, <em>delta_f=None</em>, <em>delta_t=None</em>, <em>gates=None</em>, <em>recalibration=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/marginalized_gaussian_noise.html#MarginalizedGaussianNoise.from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.marginalized_gaussian_noise.MarginalizedGaussianNoise.from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes an instance of this class from the given config file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cp</strong> (<a class="reference internal" href="pycbc.workflow.html#pycbc.workflow.configuration.WorkflowConfigParser" title="pycbc.workflow.configuration.WorkflowConfigParser"><em>WorkflowConfigParser</em></a>) – Config file parser to read.</li>
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – A dictionary of data, in which the keys are the detector names and
+the values are the data. This is not retrieved from the config
+file, and so must be provided.</li>
+<li><strong>delta_f</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The frequency spacing of the data; needed for waveform generation.</li>
+<li><strong>delta_t</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The time spacing of the data; needed for time-domain waveform
+generators.</li>
+<li><strong>recalibration</strong> (<em>dict of pycbc.calibration.Recalibrate</em><em>, </em><em>optional</em>) – Dictionary of detectors -&gt; recalibration class instances for
+recalibrating data.</li>
+<li><strong>gates</strong> (<em>dict of tuples</em><em>, </em><em>optional</em>) – Dictionary of detectors -&gt; tuples of specifying gate times. The
+sort of thing returned by <cite>pycbc.gate.gates_from_cli</cite>.</li>
+<li><strong>**kwargs</strong> – All additional keyword arguments are passed to the class. Any
+provided keyword will over ride what is in the config file.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pycbc.inference.models.marginalized_gaussian_noise.MarginalizedGaussianNoise.name">
+<code class="descname">name</code><em class="property"> = 'marginalized_gaussian_noise'</em><a class="headerlink" href="#pycbc.inference.models.marginalized_gaussian_noise.MarginalizedGaussianNoise.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pycbc.inference.models.marginalized_gaussian_noise.MarginalizedPhaseGaussianNoise">
+<em class="property">class </em><code class="descclassname">pycbc.inference.models.marginalized_gaussian_noise.</code><code class="descname">MarginalizedPhaseGaussianNoise</code><span class="sig-paren">(</span><em>variable_params</em>, <em>data</em>, <em>low_frequency_cutoff</em>, <em>psds=None</em>, <em>high_frequency_cutoff=None</em>, <em>static_params=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/marginalized_gaussian_noise.html#MarginalizedPhaseGaussianNoise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.marginalized_gaussian_noise.MarginalizedPhaseGaussianNoise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.models.gaussian_noise.GaussianNoise" title="pycbc.inference.models.gaussian_noise.GaussianNoise"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.models.gaussian_noise.GaussianNoise</span></code></a></p>
+<p>The likelihood is analytically marginalized over phase.</p>
+<p>This class can be used with signal models that can be written as:</p>
+<div class="math notranslate nohighlight">
+\[\tilde{h}(f; \Theta, \phi) = A(f; \Theta)e^{i\Psi(f; \Theta) + i \phi},\]</div>
+<p>where <span class="math notranslate nohighlight">\(\phi\)</span> is an arbitrary phase constant. This phase constant
+can be analytically marginalized over with a uniform prior as follows:
+assuming the noise is stationary and Gaussian (see <cite>GaussianNoise</cite>
+for details), the posterior is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}p(\Theta,\phi|d)
+    &amp;\propto p(\Theta)p(\phi)p(d|\Theta,\phi) \\
+    &amp;\propto p(\Theta)\frac{1}{2\pi}\exp\left[
+        -\frac{1}{2}\sum_{i}^{N_D} \left&lt;
+            h_i(\Theta,\phi) - d_i, h_i(\Theta,\phi) - d_i
+        \right&gt;\right].\end{split}\]</div>
+<p>Here, the sum is over the number of detectors <span class="math notranslate nohighlight">\(N_D\)</span>, <span class="math notranslate nohighlight">\(d_i\)</span>
+and <span class="math notranslate nohighlight">\(h_i\)</span> are the data and signal in detector <span class="math notranslate nohighlight">\(i\)</span>,
+respectively, and we have assumed a uniform prior on <span class="math notranslate nohighlight">\(phi \in [0,
+2\pi)\)</span>. With the form of the signal model given above, the inner product
+in the exponent can be written as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}-\frac{1}{2}\left&lt;h_i - d_i, h_i- d_i\right&gt;
+    &amp;= \left&lt;h_i, d_i\right&gt; -
+       \frac{1}{2}\left&lt;h_i, h_i\right&gt; -
+       \frac{1}{2}\left&lt;d_i, d_i\right&gt; \\
+    &amp;= \Re\left\{O(h^0_i, d_i)e^{-i\phi}\right\} -
+       \frac{1}{2}\left&lt;h^0_i, h^0_i\right&gt; -
+       \frac{1}{2}\left&lt;d_i, d_i\right&gt;,\end{split}\]</div>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}h_i^0 &amp;\equiv \tilde{h}_i(f; \Theta, \phi=0); \\
+O(h^0_i, d_i) &amp;\equiv 4 \int_0^\infty
+    \frac{\tilde{h}_i^*(f; \Theta,0)\tilde{d}_i(f)}{S_n(f)}\mathrm{d}f.\end{split}\]</div>
+<p>Gathering all of the terms that are not dependent on <span class="math notranslate nohighlight">\(\phi\)</span> together:</p>
+<div class="math notranslate nohighlight">
+\[\alpha(\Theta, d) \equiv \exp\left[-\frac{1}{2}\sum_i
+    \left&lt;h^0_i, h^0_i\right&gt; + \left&lt;d_i, d_i\right&gt;\right],\]</div>
+<p>we can marginalize the posterior over <span class="math notranslate nohighlight">\(\phi\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}p(\Theta|d)
+    &amp;\propto p(\Theta)\alpha(\Theta,d)\frac{1}{2\pi}
+             \int_{0}^{2\pi}\exp\left[\Re \left\{
+                 e^{-i\phi} \sum_i O(h^0_i, d_i)
+             \right\}\right]\mathrm{d}\phi \\
+    &amp;\propto p(\Theta)\alpha(\Theta, d)\frac{1}{2\pi}
+             \int_{0}^{2\pi}\exp\left[
+                 x(\Theta,d)\cos(\phi) + y(\Theta, d)\sin(\phi)
+             \right]\mathrm{d}\phi.\end{split}\]</div>
+<p>The integral in the last line is equal to <span class="math notranslate nohighlight">\(2\pi I_0(\sqrt{x^2+y^2})\)</span>,
+where <span class="math notranslate nohighlight">\(I_0\)</span> is the modified Bessel function of the first kind. Thus
+the marginalized log posterior is:</p>
+<div class="math notranslate nohighlight">
+\[\log p(\Theta|d) \propto \log p(\Theta) +
+    I_0\left(\left|\sum_i O(h^0_i, d_i)\right|\right) -
+    \frac{1}{2}\sum_i\left[ \left&lt;h^0_i, h^0_i\right&gt; -
+                            \left&lt;d_i, d_i\right&gt; \right]\]</div>
+<dl class="attribute">
+<dt id="pycbc.inference.models.marginalized_gaussian_noise.MarginalizedPhaseGaussianNoise.name">
+<code class="descname">name</code><em class="property"> = 'marginalized_phase'</em><a class="headerlink" href="#pycbc.inference.models.marginalized_gaussian_noise.MarginalizedPhaseGaussianNoise.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pycbc.inference.models.single_template">
+<span id="pycbc-inference-models-single-template-module"></span><h2>pycbc.inference.models.single_template module<a class="headerlink" href="#module-pycbc.inference.models.single_template" title="Permalink to this headline">¶</a></h2>
+<p>This module provides model classes that assume the noise is Gaussian.</p>
+<dl class="class">
+<dt id="pycbc.inference.models.single_template.SingleTemplate">
+<em class="property">class </em><code class="descclassname">pycbc.inference.models.single_template.</code><code class="descname">SingleTemplate</code><span class="sig-paren">(</span><em>data</em>, <em>psds</em>, <em>low_frequency_cutoff=None</em>, <em>high_frequency_cutoff=None</em>, <em>sample_rate=32768</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models/single_template.html#SingleTemplate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.single_template.SingleTemplate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pycbc.inference.models.base_data.BaseDataModel" title="pycbc.inference.models.base_data.BaseDataModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pycbc.inference.models.base_data.BaseDataModel</span></code></a></p>
+<p>Model that assumes we know all the intrinsic parameters.</p>
+<p>This model assumes we know all the intrinsic parameters, and are only
+maximizing over the extrinsic ones. We also assume a dominant mode waveform
+approximant only and non-precessing.</p>
+<dl class="attribute">
+<dt id="pycbc.inference.models.single_template.SingleTemplate.name">
+<code class="descname">name</code><em class="property"> = 'single_template'</em><a class="headerlink" href="#pycbc.inference.models.single_template.SingleTemplate.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pycbc.inference.models">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pycbc.inference.models" title="Permalink to this headline">¶</a></h2>
+<p>This package provides classes and functions for evaluating Bayesian statistics
+assuming various noise models.</p>
+<dl class="class">
+<dt id="pycbc.inference.models.CallModel">
+<em class="property">class </em><code class="descclassname">pycbc.inference.models.</code><code class="descname">CallModel</code><span class="sig-paren">(</span><em>model</em>, <em>callstat</em>, <em>return_all_stats=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models.html#CallModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.CallModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Wrapper class for calling models from a sampler.</p>
+<p>This class can be called like a function, with the parameter values to
+evaluate provided as a list in the same order as the model’s
+<code class="docutils literal notranslate"><span class="pre">variable_params</span></code>. In that case, the model is updated with the provided
+parameters and then the <code class="docutils literal notranslate"><span class="pre">callstat</span></code> retrieved. If <code class="docutils literal notranslate"><span class="pre">return_all_stats</span></code> is
+set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, then all of the stats specified by the model’s
+<code class="docutils literal notranslate"><span class="pre">default_stats</span></code> will be returned as a tuple, in addition to the stat
+value.</p>
+<p>The model’s attributes are promoted to this class’s namespace, so that any
+attribute and method of <code class="docutils literal notranslate"><span class="pre">model</span></code> may be called directly from this class.</p>
+<p>This class must be initalized prior to the creation of a <code class="docutils literal notranslate"><span class="pre">Pool</span></code> object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<em>Model instance</em>) – The model to call.</li>
+<li><strong>callstat</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The statistic to call.</li>
+<li><strong>return_all_stats</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether or not to return all of the other statistics along with the
+<code class="docutils literal notranslate"><span class="pre">callstat</span></code> value.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Create a wrapper around an instance of the <code class="docutils literal notranslate"><span class="pre">TestNormal</span></code> model, with the
+<code class="docutils literal notranslate"><span class="pre">callstat</span></code> set to <code class="docutils literal notranslate"><span class="pre">logposterior</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pycbc.inference.models</span> <span class="k">import</span> <span class="n">TestNormal</span><span class="p">,</span> <span class="n">CallModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">TestNormal</span><span class="p">([</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">call_model</span> <span class="o">=</span> <span class="n">CallModel</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;logposterior&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now call on a set of parameter values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">call_model</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">])</span>
+<span class="go">(-1.8628770664093453, (0.0, 0.0, -1.8628770664093453))</span>
+</pre></div>
+</div>
+<p>Note that a tuple of all of the model’s <code class="docutils literal notranslate"><span class="pre">default_stats</span></code> were returned in
+addition to the <code class="docutils literal notranslate"><span class="pre">logposterior</span></code> value. We can shut this off by toggling
+<code class="docutils literal notranslate"><span class="pre">return_all_stats</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">call_model</span><span class="o">.</span><span class="n">return_all_stats</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">call_model</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">])</span>
+<span class="go">-1.8628770664093453</span>
+</pre></div>
+</div>
+<p>Attributes of the model can be called from the call model. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">call_model</span><span class="o">.</span><span class="n">variable_params</span>
+<span class="go">(&#39;x&#39;, &#39;y&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycbc.inference.models.read_from_config">
+<code class="descclassname">pycbc.inference.models.</code><code class="descname">read_from_config</code><span class="sig-paren">(</span><em>cp</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pycbc/inference/models.html#read_from_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycbc.inference.models.read_from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes a model from the given config file.</p>
+<p>The section must have a <code class="docutils literal notranslate"><span class="pre">name</span></code> argument. The name argument corresponds to
+the name of the class to initialize.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cp</strong> (<a class="reference internal" href="pycbc.workflow.html#pycbc.workflow.configuration.WorkflowConfigParser" title="pycbc.workflow.configuration.WorkflowConfigParser"><em>WorkflowConfigParser</em></a>) – Config file parser to read.</li>
+<li><strong>**kwargs</strong> – All other keyword arguments are passed to the <code class="docutils literal notranslate"><span class="pre">from_config</span></code> method
+of the class specified by the name argument.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The initialized model.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">cls</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pycbc.inference.sampler.html" class="btn btn-neutral float-right" title="pycbc.inference.sampler package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pycbc.inference.io.html" class="btn btn-neutral float-left" title="pycbc.inference.io package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
+      <span class="lastupdated">
+        Last updated on Nov 08, 2019.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

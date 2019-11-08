@@ -1,0 +1,432 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pycbc.waveform.decompress_cpu &mdash; PyCBC 23d915 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../_static/typed.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/terminal.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> PyCBC
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.14.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../credit.html">Use of PyCBC in Scientific Publications</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../docker.html">Running PyCBC under Docker</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installing PyCBC</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow/pycbc_make_psd_estimation_workflow.html"><code class="docutils literal notranslate"><span class="pre">pycbc_make_psd_estimation_workflow</span></code>: A workflow generator for noise estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow/pycbc_make_coinc_search_workflow.html"><code class="docutils literal notranslate"><span class="pre">pycbc_make_coinc_search_workflow</span></code>: A workflow to search for gravitational waves</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow/pygrb.html"><code class="docutils literal notranslate"><span class="pre">pycbc_make_offline_grb_workflow</span></code>: A GRB triggered CBC analysis workflow generator</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../inference.html">PyCBC inference documentation (<code class="docutils literal notranslate"><span class="pre">pycbc.inference</span></code>)</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tmpltbank.html">PyCBC template bank generation documentation (<code class="docutils literal notranslate"><span class="pre">pycbc.tmpltbank</span></code>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../hwinj.html">Hardware injection waveform generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../banksim.html">Calculating the Effectualness (Fitting Factor) of Template Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faithsim.html">Dag Generator for Doing Faithfulness Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../upload_to_gracedb.html">Uploading triggers to gracedb</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../catalog.html">Catalog of Observed Gravitational-wave Mergers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dataquality.html">Query times of valid data, hardware injections, and more.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../frame.html">Reading Gravitational-wave Frames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../gw150914.html">Signal Processing with GW150914</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../detector.html">Gravitational-wave Detectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../psd.html">Handling PSDs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../noise.html">Generating Noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../waveform.html">Waveforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filter.html">Filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../distributions.html">Using PyCBC Distributions from PyCBC Inference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../building_bundled_executables.html">Building Bundled Executables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation.html">Documenting PyCBC code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release.html">Creating Releases of PyCBC</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../formats/hdf_format.html">HDF files within the PyCBC workflow</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow.html">Workflow: the inspiral analysis workflow generator (<code class="docutils literal notranslate"><span class="pre">pycbc.workflow</span></code>)</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">pycbc</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PyCBC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../pycbc.html">pycbc</a> &raquo;</li>
+        
+      <li>pycbc.waveform.decompress_cpu</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pycbc.waveform.decompress_cpu</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2016  Alex Nitz, Collin Capano</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software; you can redistribute it and/or modify it</span>
+<span class="c1"># under the terms of the GNU General Public License as published by the</span>
+<span class="c1"># Free Software Foundation; either version 3 of the License, or (at your</span>
+<span class="c1"># option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful, but</span>
+<span class="c1"># WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General</span>
+<span class="c1"># Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License along</span>
+<span class="c1"># with this program; if not, write to the Free Software Foundation, Inc.,</span>
+<span class="c1"># 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
+<span class="c1">#</span>
+<span class="c1"># =============================================================================</span>
+<span class="c1">#</span>
+<span class="c1">#                                   Preamble</span>
+<span class="c1">#</span>
+<span class="c1"># =============================================================================</span>
+<span class="c1">#</span>
+<span class="sd">&quot;&quot;&quot; Utilities for handling frequency compressed an unequally spaced frequency</span>
+<span class="sd">domain waveforms.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">pycbc.opt</span> <span class="k">import</span> <span class="n">omp_libs</span><span class="p">,</span> <span class="n">omp_flags</span>
+<span class="kn">from</span> <span class="nn">pycbc</span> <span class="k">import</span> <span class="n">WEAVE_FLAGS</span>
+<span class="kn">from</span> <span class="nn">pycbc.weave</span> <span class="k">import</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="n">_linear_decompress_code</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    #include &lt;math.h&gt;</span>
+<span class="s2">    #include &lt;stdio.h&gt;</span>
+<span class="s2">    // This code expects to be passed:</span>
+<span class="s2">    // h: array of complex doubles</span>
+<span class="s2">    //      the output array to write the results to.</span>
+<span class="s2">    // delta_f: double</span>
+<span class="s2">    //      the df of the output array</span>
+<span class="s2">    // hlen: int</span>
+<span class="s2">    //      the length of h</span>
+<span class="s2">    // start_index: int</span>
+<span class="s2">    //      the index to start the waveform in the output</span>
+<span class="s2">    //      frequency series; i.e., ceil(f_lower/df)</span>
+<span class="s2">    // sample_frequencies: array of real doubles</span>
+<span class="s2">    //      the frequencies at which the compressed waveform is sampled</span>
+<span class="s2">    // amp: array of real doubles</span>
+<span class="s2">    //      the amplitude of the waveform at the sample frequencies</span>
+<span class="s2">    // phase: array of real doubles</span>
+<span class="s2">    //      the phase of the waveform at the sample frequencies</span>
+<span class="s2">    // sflen: int</span>
+<span class="s2">    //      the length of the sample frequencies</span>
+<span class="s2">    // imin: int</span>
+<span class="s2">    //      the index to start at in the compressed series</span>
+
+<span class="s2">    // We will cast the output to a double array for faster processing.</span>
+<span class="s2">    // This takes advantage of the fact that complex arrays store</span>
+<span class="s2">    // their real and imaginary values next to each other in memory.</span>
+
+<span class="s2">    double* outptr = (double*) h;</span>
+
+<span class="s2">    // for keeping track of where in the output frequencies we are</span>
+<span class="s2">    int findex, next_sfindex, kmax;</span>
+
+<span class="s2">    // variables for computing the interpolation</span>
+<span class="s2">    double df = (double) delta_f;</span>
+<span class="s2">    double inv_df = 1./df;</span>
+<span class="s2">    double f, inv_sdf;</span>
+<span class="s2">    double sf, this_amp, this_phi;</span>
+<span class="s2">    double next_sf = sample_frequencies[imin];</span>
+<span class="s2">    double next_amp = amp[imin];</span>
+<span class="s2">    double next_phi = phase[imin];</span>
+<span class="s2">    double m_amp, b_amp;</span>
+<span class="s2">    double m_phi, b_phi;</span>
+<span class="s2">    double interp_amp, interp_phi;</span>
+
+<span class="s2">    // variables for updating each interpolated frequency</span>
+<span class="s2">    double h_re, h_im, incrh_re, incrh_im;</span>
+<span class="s2">    double g_re, g_im, incrg_re, incrg_im;</span>
+<span class="s2">    double dphi_re, dphi_im;</span>
+
+<span class="s2">    // we will re-compute cos/sin of the phase at the following intervals:</span>
+<span class="s2">    int update_interval = 128;</span>
+
+<span class="s2">    // zero out the beginning</span>
+<span class="s2">    memset(outptr, 0, sizeof(*outptr)*2*start_index);</span>
+
+<span class="s2">    // move to the start position</span>
+<span class="s2">    outptr += 2*start_index;</span>
+<span class="s2">    findex = start_index;</span>
+
+<span class="s2">    // cycle over the compressed samples</span>
+<span class="s2">    for (int ii=imin; ii&lt;(sflen-1); ii++){</span>
+<span class="s2">        // update the linear interpolations</span>
+<span class="s2">        sf = next_sf;</span>
+<span class="s2">        next_sf = (double) sample_frequencies[ii+1];</span>
+<span class="s2">        next_sfindex = (int) ceil(next_sf * inv_df);</span>
+<span class="s2">        if (next_sfindex &gt; hlen)</span>
+<span class="s2">            next_sfindex = hlen;</span>
+<span class="s2">        inv_sdf = 1./(next_sf - sf);</span>
+<span class="s2">        this_amp = next_amp;</span>
+<span class="s2">        next_amp = (double) amp[ii+1];</span>
+<span class="s2">        this_phi = next_phi;</span>
+<span class="s2">        next_phi = (double) phase[ii+1];</span>
+<span class="s2">        m_amp = (next_amp - this_amp)*inv_sdf;</span>
+<span class="s2">        b_amp = this_amp - m_amp*sf;</span>
+<span class="s2">        m_phi = (next_phi - this_phi)*inv_sdf;</span>
+<span class="s2">        b_phi = this_phi - m_phi*sf;</span>
+
+<span class="s2">        // cycle over the interpolated points between this and the next</span>
+<span class="s2">        // compressed sample</span>
+<span class="s2">        while (findex &lt; next_sfindex){</span>
+<span class="s2">            // for the first step, compute the value of h from the interpolated</span>
+<span class="s2">            // amplitude and phase</span>
+<span class="s2">            f = findex*df;</span>
+<span class="s2">            interp_amp = m_amp * f + b_amp;</span>
+<span class="s2">            interp_phi = m_phi * f + b_phi;</span>
+<span class="s2">            dphi_re = cos(m_phi * df);</span>
+<span class="s2">            dphi_im = sin(m_phi * df);</span>
+<span class="s2">            h_re = interp_amp * cos(interp_phi);</span>
+<span class="s2">            h_im = interp_amp * sin(interp_phi);</span>
+<span class="s2">            g_re = m_amp * df * cos(interp_phi);</span>
+<span class="s2">            g_im = m_amp * df * sin(interp_phi);</span>
+
+<span class="s2">            // save and update counters</span>
+<span class="s2">            *outptr = h_re;</span>
+<span class="s2">            *(outptr+1) = h_im;</span>
+<span class="s2">            outptr += 2;</span>
+<span class="s2">            findex++;</span>
+
+<span class="s2">            // for the next update_interval steps, compute h by incrementing</span>
+<span class="s2">            // the last h</span>
+<span class="s2">            kmax = findex + update_interval;</span>
+<span class="s2">            if (kmax &gt; next_sfindex)</span>
+<span class="s2">                kmax = next_sfindex;</span>
+<span class="s2">            while (findex &lt; kmax){</span>
+<span class="s2">                incrh_re = h_re * dphi_re - h_im * dphi_im;</span>
+<span class="s2">                incrh_im = h_re * dphi_im + h_im * dphi_re;</span>
+<span class="s2">                incrg_re = g_re * dphi_re - g_im * dphi_im;</span>
+<span class="s2">                incrg_im = g_re * dphi_im + g_im * dphi_re;</span>
+<span class="s2">                h_re = incrh_re + incrg_re;</span>
+<span class="s2">                h_im = incrh_im + incrg_im;</span>
+<span class="s2">                g_re = incrg_re;</span>
+<span class="s2">                g_im = incrg_im;</span>
+
+<span class="s2">                // save and update counters</span>
+<span class="s2">                *outptr = h_re;</span>
+<span class="s2">                *(outptr+1) = h_im;</span>
+<span class="s2">                outptr += 2;</span>
+<span class="s2">                findex++;</span>
+<span class="s2">            }</span>
+<span class="s2">        }</span>
+<span class="s2">        if (next_sfindex == hlen){</span>
+<span class="s2">            break;</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+
+<span class="s2">    // zero out the rest of the array</span>
+<span class="s2">    memset(outptr, 0, sizeof(*outptr)*2*(hlen-findex));</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># for single precision</span>
+<span class="n">_linear_decompress_code32</span> <span class="o">=</span> <span class="n">_linear_decompress_code</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;double&#39;</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="inline_linear_interp"><a class="viewcode-back" href="../../../pycbc.waveform.html#pycbc.waveform.decompress_cpu.inline_linear_interp">[docs]</a><span class="k">def</span> <span class="nf">inline_linear_interp</span><span class="p">(</span><span class="n">amp</span><span class="p">,</span> <span class="n">phase</span><span class="p">,</span> <span class="n">sample_frequencies</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span>
+                         <span class="n">df</span><span class="p">,</span> <span class="n">f_lower</span><span class="p">,</span> <span class="n">imin</span><span class="p">,</span> <span class="n">start_index</span><span class="p">):</span>
+    <span class="c1"># The CPU code does not reference f_lower, but GPU needs it</span>
+    <span class="k">if</span> <span class="n">output</span><span class="o">.</span><span class="n">precision</span> <span class="o">==</span> <span class="s1">&#39;single&#39;</span><span class="p">:</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="n">_linear_decompress_code32</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="n">_linear_decompress_code</span>
+    <span class="n">sample_frequencies</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sample_frequencies</span><span class="p">)</span>
+    <span class="n">amp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">amp</span><span class="p">)</span>
+    <span class="n">phase</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">phase</span><span class="p">)</span>
+    <span class="n">sflen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sample_frequencies</span><span class="p">)</span> <span class="c1"># pylint:disable=unused-variable</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># pylint:disable=unused-variable</span>
+    <span class="n">hlen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">output</span><span class="p">)</span> <span class="c1"># pylint:disable=unused-variable</span>
+    <span class="n">delta_f</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="c1"># pylint:disable=unused-variable</span>
+    <span class="n">inline</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;hlen&#39;</span><span class="p">,</span> <span class="s1">&#39;sflen&#39;</span><span class="p">,</span> <span class="s1">&#39;delta_f&#39;</span><span class="p">,</span> <span class="s1">&#39;sample_frequencies&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;amp&#39;</span><span class="p">,</span> <span class="s1">&#39;phase&#39;</span><span class="p">,</span> <span class="s1">&#39;start_index&#39;</span><span class="p">,</span> <span class="s1">&#39;imin&#39;</span><span class="p">],</span>
+           <span class="n">extra_compile_args</span><span class="o">=</span><span class="p">[</span><span class="n">WEAVE_FLAGS</span><span class="p">]</span> <span class="o">+</span> <span class="n">omp_flags</span><span class="p">,</span>
+           <span class="n">libraries</span><span class="o">=</span><span class="n">omp_libs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
+      <span class="lastupdated">
+        Last updated on Nov 08, 2019.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

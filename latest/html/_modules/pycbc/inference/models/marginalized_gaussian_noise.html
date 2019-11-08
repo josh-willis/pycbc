@@ -1,0 +1,889 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pycbc.inference.models.marginalized_gaussian_noise &mdash; PyCBC 23d915 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../../../_static/typed.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/terminal.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> PyCBC
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.14.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../credit.html">Use of PyCBC in Scientific Publications</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docker.html">Running PyCBC under Docker</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installing PyCBC</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../workflow/pycbc_make_psd_estimation_workflow.html"><code class="docutils literal notranslate"><span class="pre">pycbc_make_psd_estimation_workflow</span></code>: A workflow generator for noise estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../workflow/pycbc_make_coinc_search_workflow.html"><code class="docutils literal notranslate"><span class="pre">pycbc_make_coinc_search_workflow</span></code>: A workflow to search for gravitational waves</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../workflow/pygrb.html"><code class="docutils literal notranslate"><span class="pre">pycbc_make_offline_grb_workflow</span></code>: A GRB triggered CBC analysis workflow generator</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../inference.html">PyCBC inference documentation (<code class="docutils literal notranslate"><span class="pre">pycbc.inference</span></code>)</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tmpltbank.html">PyCBC template bank generation documentation (<code class="docutils literal notranslate"><span class="pre">pycbc.tmpltbank</span></code>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../hwinj.html">Hardware injection waveform generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../banksim.html">Calculating the Effectualness (Fitting Factor) of Template Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../faithsim.html">Dag Generator for Doing Faithfulness Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../upload_to_gracedb.html">Uploading triggers to gracedb</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../catalog.html">Catalog of Observed Gravitational-wave Mergers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dataquality.html">Query times of valid data, hardware injections, and more.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../frame.html">Reading Gravitational-wave Frames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../gw150914.html">Signal Processing with GW150914</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../detector.html">Gravitational-wave Detectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../psd.html">Handling PSDs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../noise.html">Generating Noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../waveform.html">Waveforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../filter.html">Filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../distributions.html">Using PyCBC Distributions from PyCBC Inference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../building_bundled_executables.html">Building Bundled Executables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation.html">Documenting PyCBC code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../release.html">Creating Releases of PyCBC</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../formats/hdf_format.html">HDF files within the PyCBC workflow</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../workflow.html">Workflow: the inspiral analysis workflow generator (<code class="docutils literal notranslate"><span class="pre">pycbc.workflow</span></code>)</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">pycbc</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">PyCBC</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../../pycbc.html">pycbc</a> &raquo;</li>
+        
+          <li><a href="../models.html">pycbc.inference.models</a> &raquo;</li>
+        
+      <li>pycbc.inference.models.marginalized_gaussian_noise</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pycbc.inference.models.marginalized_gaussian_noise</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2018  Charlie Hoy, Collin Capano</span>
+<span class="c1"># This program is free software; you can redistribute it and/or modify it</span>
+<span class="c1"># under the terms of the GNU General Public License as published by the</span>
+<span class="c1"># Free Software Foundation; either version 3 of the License, or (at your</span>
+<span class="c1"># option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful, but</span>
+<span class="c1"># WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General</span>
+<span class="c1"># Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License along</span>
+<span class="c1"># with this program; if not, write to the Free Software Foundation, Inc.,</span>
+<span class="c1"># 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides model classes that assume the noise is Gaussian and</span>
+<span class="sd">allows for the likelihood to be marginalized over phase and/or time and/or</span>
+<span class="sd">distance.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">special</span>
+
+<span class="kn">from</span> <span class="nn">pycbc.waveform</span> <span class="k">import</span> <span class="n">NoWaveformError</span>
+<span class="kn">from</span> <span class="nn">pycbc.filter.matchedfilter</span> <span class="k">import</span> <span class="n">matched_filter_core</span>
+<span class="kn">from</span> <span class="nn">pycbc.distributions</span> <span class="k">import</span> <span class="n">read_distributions_from_config</span>
+<span class="kn">from</span> <span class="nn">pycbc.waveform</span> <span class="k">import</span> <span class="n">generator</span>
+
+<span class="kn">from</span> <span class="nn">.gaussian_noise</span> <span class="k">import</span> <span class="n">GaussianNoise</span>
+
+
+<div class="viewcode-block" id="MarginalizedPhaseGaussianNoise"><a class="viewcode-back" href="../../../../pycbc.inference.models.html#pycbc.inference.models.marginalized_gaussian_noise.MarginalizedPhaseGaussianNoise">[docs]</a><span class="k">class</span> <span class="nc">MarginalizedPhaseGaussianNoise</span><span class="p">(</span><span class="n">GaussianNoise</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;The likelihood is analytically marginalized over phase.</span>
+
+<span class="sd">    This class can be used with signal models that can be written as:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \tilde{h}(f; \Theta, \phi) = A(f; \Theta)e^{i\Psi(f; \Theta) + i \phi},</span>
+
+<span class="sd">    where :math:`\phi` is an arbitrary phase constant. This phase constant</span>
+<span class="sd">    can be analytically marginalized over with a uniform prior as follows:</span>
+<span class="sd">    assuming the noise is stationary and Gaussian (see `GaussianNoise`</span>
+<span class="sd">    for details), the posterior is:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        p(\Theta,\phi|d)</span>
+<span class="sd">            &amp;\propto p(\Theta)p(\phi)p(d|\Theta,\phi) \\</span>
+<span class="sd">            &amp;\propto p(\Theta)\frac{1}{2\pi}\exp\left[</span>
+<span class="sd">                -\frac{1}{2}\sum_{i}^{N_D} \left&lt;</span>
+<span class="sd">                    h_i(\Theta,\phi) - d_i, h_i(\Theta,\phi) - d_i</span>
+<span class="sd">                \right&gt;\right].</span>
+
+<span class="sd">    Here, the sum is over the number of detectors :math:`N_D`, :math:`d_i`</span>
+<span class="sd">    and :math:`h_i` are the data and signal in detector :math:`i`,</span>
+<span class="sd">    respectively, and we have assumed a uniform prior on :math:`phi \in [0,</span>
+<span class="sd">    2\pi)`. With the form of the signal model given above, the inner product</span>
+<span class="sd">    in the exponent can be written as:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        -\frac{1}{2}\left&lt;h_i - d_i, h_i- d_i\right&gt;</span>
+<span class="sd">            &amp;= \left&lt;h_i, d_i\right&gt; -</span>
+<span class="sd">               \frac{1}{2}\left&lt;h_i, h_i\right&gt; -</span>
+<span class="sd">               \frac{1}{2}\left&lt;d_i, d_i\right&gt; \\</span>
+<span class="sd">            &amp;= \Re\left\{O(h^0_i, d_i)e^{-i\phi}\right\} -</span>
+<span class="sd">               \frac{1}{2}\left&lt;h^0_i, h^0_i\right&gt; -</span>
+<span class="sd">               \frac{1}{2}\left&lt;d_i, d_i\right&gt;,</span>
+
+<span class="sd">    where:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        h_i^0 &amp;\equiv \tilde{h}_i(f; \Theta, \phi=0); \\</span>
+<span class="sd">        O(h^0_i, d_i) &amp;\equiv 4 \int_0^\infty</span>
+<span class="sd">            \frac{\tilde{h}_i^*(f; \Theta,0)\tilde{d}_i(f)}{S_n(f)}\mathrm{d}f.</span>
+
+<span class="sd">    Gathering all of the terms that are not dependent on :math:`\phi` together:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \alpha(\Theta, d) \equiv \exp\left[-\frac{1}{2}\sum_i</span>
+<span class="sd">            \left&lt;h^0_i, h^0_i\right&gt; + \left&lt;d_i, d_i\right&gt;\right],</span>
+
+<span class="sd">    we can marginalize the posterior over :math:`\phi`:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        p(\Theta|d)</span>
+<span class="sd">            &amp;\propto p(\Theta)\alpha(\Theta,d)\frac{1}{2\pi}</span>
+<span class="sd">                     \int_{0}^{2\pi}\exp\left[\Re \left\{</span>
+<span class="sd">                         e^{-i\phi} \sum_i O(h^0_i, d_i)</span>
+<span class="sd">                     \right\}\right]\mathrm{d}\phi \\</span>
+<span class="sd">            &amp;\propto p(\Theta)\alpha(\Theta, d)\frac{1}{2\pi}</span>
+<span class="sd">                     \int_{0}^{2\pi}\exp\left[</span>
+<span class="sd">                         x(\Theta,d)\cos(\phi) + y(\Theta, d)\sin(\phi)</span>
+<span class="sd">                     \right]\mathrm{d}\phi.</span>
+
+<span class="sd">    The integral in the last line is equal to :math:`2\pi I_0(\sqrt{x^2+y^2})`,</span>
+<span class="sd">    where :math:`I_0` is the modified Bessel function of the first kind. Thus</span>
+<span class="sd">    the marginalized log posterior is:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \log p(\Theta|d) \propto \log p(\Theta) +</span>
+<span class="sd">            I_0\left(\left|\sum_i O(h^0_i, d_i)\right|\right) -</span>
+<span class="sd">            \frac{1}{2}\sum_i\left[ \left&lt;h^0_i, h^0_i\right&gt; -</span>
+<span class="sd">                                    \left&lt;d_i, d_i\right&gt; \right]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;marginalized_phase&#39;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_extra_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds ``loglr``, plus ``cplx_loglr`` and ``optimal_snrsq`` in each</span>
+<span class="sd">        detector.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;loglr&#39;</span><span class="p">,</span> <span class="s1">&#39;maxl_phase&#39;</span><span class="p">]</span> <span class="o">+</span> \
+               <span class="p">[</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_optimal_snrsq&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">det</span><span class="p">)</span> <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_loglr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Computes the log likelihood ratio,</span>
+<span class="sd">        .. math::</span>
+<span class="sd">            \log \mathcal{L}(\Theta) =</span>
+<span class="sd">                I_0 \left(\left|\sum_i O(h^0_i, d_i)\right|\right) -</span>
+<span class="sd">                \frac{1}{2}\left&lt;h^0_i, h^0_i\right&gt;,</span>
+<span class="sd">        at the current point in parameter space :math:`\Theta`.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            The value of the log likelihood ratio evaluated at the given point.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_params</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">wfs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_waveform_generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">NoWaveformError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nowaveform_loglr</span><span class="p">()</span>
+        <span class="n">hh</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="n">hd</span> <span class="o">=</span> <span class="mi">0</span><span class="n">j</span>
+        <span class="k">for</span> <span class="n">det</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">wfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># the kmax of the waveforms may be different than internal kmax</span>
+            <span class="n">kmax</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">h</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kmax</span><span class="p">[</span><span class="n">det</span><span class="p">])</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kmin</span><span class="p">[</span><span class="n">det</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">kmax</span><span class="p">:</span>
+                <span class="c1"># if the waveform terminates before the filtering low frequency</span>
+                <span class="c1"># cutoff, then the loglr is just 0 for this detector</span>
+                <span class="n">hh_i</span> <span class="o">=</span> <span class="mf">0.</span>
+                <span class="n">hd_i</span> <span class="o">=</span> <span class="mi">0</span><span class="n">j</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># whiten the waveform</span>
+                <span class="n">h</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_kmin</span><span class="p">[</span><span class="n">det</span><span class="p">]:</span><span class="n">kmax</span><span class="p">]</span> <span class="o">*=</span> \
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_weight</span><span class="p">[</span><span class="n">det</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_kmin</span><span class="p">[</span><span class="n">det</span><span class="p">]:</span><span class="n">kmax</span><span class="p">]</span>
+                <span class="c1"># calculate inner products</span>
+                <span class="n">hh_i</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_kmin</span><span class="p">[</span><span class="n">det</span><span class="p">]:</span><span class="n">kmax</span><span class="p">]</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span>
+                    <span class="n">h</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_kmin</span><span class="p">[</span><span class="n">det</span><span class="p">]:</span><span class="n">kmax</span><span class="p">])</span><span class="o">.</span><span class="n">real</span>
+                <span class="n">hd_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">det</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_kmin</span><span class="p">[</span><span class="n">det</span><span class="p">]:</span><span class="n">kmax</span><span class="p">]</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span>
+                    <span class="n">h</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_kmin</span><span class="p">[</span><span class="n">det</span><span class="p">]:</span><span class="n">kmax</span><span class="p">])</span>
+            <span class="c1"># store</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_stats</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_optimal_snrsq&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">det</span><span class="p">),</span> <span class="n">hh_i</span><span class="p">)</span>
+            <span class="n">hh</span> <span class="o">+=</span> <span class="n">hh_i</span>
+            <span class="n">hd</span> <span class="o">+=</span> <span class="n">hd_i</span>
+        <span class="n">hd</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">hd</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_stats</span><span class="o">.</span><span class="n">maxl_phase</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">hd</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">special</span><span class="o">.</span><span class="n">i0e</span><span class="p">(</span><span class="n">hd</span><span class="p">))</span> <span class="o">+</span> <span class="n">hd</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">hh</span></div>
+
+
+<div class="viewcode-block" id="MarginalizedGaussianNoise"><a class="viewcode-back" href="../../../../pycbc.inference.models.html#pycbc.inference.models.marginalized_gaussian_noise.MarginalizedGaussianNoise">[docs]</a><span class="k">class</span> <span class="nc">MarginalizedGaussianNoise</span><span class="p">(</span><span class="n">GaussianNoise</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;The likelihood is analytically marginalized over phase and/or time</span>
+<span class="sd">    and/or distance.</span>
+
+<span class="sd">    For the case of marginalizing over phase, the signal, can be written as:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \tilde{h}(f; \Theta, \phi) = A(f; \Theta)e^{i\Psi(f; \Theta) + i \phi},</span>
+
+<span class="sd">    where :math:`\phi` is an arbitrary phase constant. This phase constant</span>
+<span class="sd">    can be analytically marginalized over with a uniform prior as follows:</span>
+<span class="sd">    assuming the noise is stationary and Gaussian (see `GaussianNoise`</span>
+<span class="sd">    for details), the posterior is:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        p(\Theta,\phi|d)</span>
+<span class="sd">            &amp;\propto p(\Theta)p(\phi)p(d|\Theta,\phi) \\</span>
+<span class="sd">            &amp;\propto p(\Theta)\frac{1}{2\pi}\exp\left[</span>
+<span class="sd">                -\frac{1}{2}\sum_{i}^{N_D} \left&lt;</span>
+<span class="sd">                    h_i(\Theta,\phi) - d_i, h_i(\Theta,\phi) - d_i</span>
+<span class="sd">                \right&gt;\right].</span>
+
+<span class="sd">    Here, the sum is over the number of detectors :math:`N_D`, :math:`d_i`</span>
+<span class="sd">    and :math:`h_i` are the data and signal in detector :math:`i`,</span>
+<span class="sd">    respectively, and we have assumed a uniform prior on :math:`phi \in [0,</span>
+<span class="sd">    2\pi)`. With the form of the signal model given above, the inner product</span>
+<span class="sd">    in the exponent can be written as:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        -\frac{1}{2}\left&lt;h_i - d_i, h_i- d_i\right&gt;</span>
+<span class="sd">            &amp;= \left&lt;h_i, d_i\right&gt; -</span>
+<span class="sd">               \frac{1}{2}\left&lt;h_i, h_i\right&gt; -</span>
+<span class="sd">               \frac{1}{2}\left&lt;d_i, d_i\right&gt; \\</span>
+<span class="sd">            &amp;= \Re\left\{O(h^0_i, d_i)e^{-i\phi}\right\} -</span>
+<span class="sd">               \frac{1}{2}\left&lt;h^0_i, h^0_i\right&gt; -</span>
+<span class="sd">               \frac{1}{2}\left&lt;d_i, d_i\right&gt;,</span>
+
+<span class="sd">    where:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        h_i^0 &amp;\equiv \tilde{h}_i(f; \Theta, \phi=0); \\</span>
+<span class="sd">        O(h^0_i, d_i) &amp;\equiv 4 \int_0^\infty</span>
+<span class="sd">            \frac{\tilde{h}_i^*(f; \Theta,0)\tilde{d}_i(f)}{S_n(f)}\mathrm{d}f.</span>
+
+<span class="sd">    Gathering all of the terms that are not dependent on :math:`\phi` together:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \alpha(\Theta, d) \equiv \exp\left[-\frac{1}{2}\sum_i</span>
+<span class="sd">            \left&lt;h^0_i, h^0_i\right&gt; + \left&lt;d_i, d_i\right&gt;\right],</span>
+
+<span class="sd">    we can marginalize the posterior over :math:`\phi`:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        p(\Theta|d)</span>
+<span class="sd">            &amp;\propto p(\Theta)\alpha(\Theta,d)\frac{1}{2\pi}</span>
+<span class="sd">                     \int_{0}^{2\pi}\exp\left[\Re \left\{</span>
+<span class="sd">                         e^{-i\phi} \sum_i O(h^0_i, d_i)</span>
+<span class="sd">                     \right\}\right]\mathrm{d}\phi \\</span>
+<span class="sd">            &amp;\propto p(\Theta)\alpha(\Theta, d)\frac{1}{2\pi}</span>
+<span class="sd">                     \int_{0}^{2\pi}\exp\left[</span>
+<span class="sd">                         x(\Theta,d)\cos(\phi) + y(\Theta, d)\sin(\phi)</span>
+<span class="sd">                     \right]\mathrm{d}\phi.</span>
+
+<span class="sd">    The integral in the last line is equal to :math:`2\pi I_0(\sqrt{x^2+y^2})`,</span>
+<span class="sd">    where :math:`I_0` is the modified Bessel function of the first kind. Thus</span>
+<span class="sd">    the marginalized log posterior is:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \log p(\Theta|d) \propto \log p(\Theta) +</span>
+<span class="sd">            I_0\left(\left|\sum_i O(h^0_i, d_i)\right|\right) -</span>
+<span class="sd">            \frac{1}{2}\sum_i\left[ \left&lt;h^0_i, h^0_i\right&gt; -</span>
+<span class="sd">                                    \left&lt;d_i, d_i\right&gt; \right]</span>
+
+<span class="sd">    For the case of marginalizing over distance, the signal can be written as,</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \tilde{h}_{j} = \frac{1}{D} \tilde{h}_{j}^{0}</span>
+
+<span class="sd">    The distance can be analytically marginalized over with a uniform prior as</span>
+<span class="sd">    follows:</span>
+<span class="sd">    assuming the noise is stationary and Gaussian (see `GaussianNoise`</span>
+<span class="sd">    for details), the likelihood is:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        log L = -\frac{1}{2}\left&lt;d-h|d-h\right&gt;</span>
+
+<span class="sd">    We see that :math: `&lt;h|h&gt;` is inversely proportional to distance squared</span>
+<span class="sd">    and :math: `&lt;h|d&gt;` is inversely proportional to distance. The log</span>
+<span class="sd">    likelihood is therefore</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \log L = -\frac{1}{2}\left&lt;d|d\right&gt; - \frac{1}{2D^{2}}</span>
+<span class="sd">                  \left&lt;h|h\right&gt; + \frac{1}{D}\left&lt;h|d\right&gt;</span>
+
+<span class="sd">    Consequently, the likelihood marginalised over distance is simply</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \log L = \log\left(\int_{0}^{D}{L p(D) dD}\right)</span>
+
+<span class="sd">    If we assume a flat prior</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \log L = \log\left(\int_{0}^{D}{\exp{\log L} dD}\right)</span>
+
+<span class="sd">    For the case of marginalizing over time, the signal can be written as,</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \tilde{h}_{j} = \tilde{h}_{j}^{0} \exp\left(-2\pi ij\Delta ft\right)</span>
+
+<span class="sd">    The time can be analytically marginalized over with a uniform prior as</span>
+<span class="sd">    follows:</span>
+<span class="sd">    assuming the noise is stationary and Gaussian (see `GaussianNoise`</span>
+<span class="sd">    for details), the likelihood is:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \log L = -\frac{1}{2}\left&lt;d-h|d-h\right&gt;</span>
+
+<span class="sd">    We note that :math: `&lt;h|h&gt;` and :math: `&lt;d|d&gt;` are time independent while</span>
+<span class="sd">    :math: `&lt;d|h&gt;` is dependent of time</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \left&lt;d|h\right&gt;(t) = 4\Delta f\sum_{j=0}^{N/2} \frac{\tilde{d}_{j}^{*}</span>
+<span class="sd">                              \tilde{h}_{j}^{0}}{S_{j}} \exp\left(-2\pi ij</span>
+<span class="sd">                              \Delta f t\right)</span>
+
+<span class="sd">    For integer timesteps :math: `t=k\Delta t`</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \left&lt;d|h\right&gt;(k\Delta t) = 4\Delta f\sum_{j=0}^{N/2} \frac{</span>
+<span class="sd">                                      \tilde{d}_{j}^{*}\tilde{h}_{j}^{0}}</span>
+<span class="sd">                                      {S_{j}}\exp(-2\pi \frac{ijk}{N}</span>
+
+<span class="sd">        \left&lt;d|h\right&gt;(k\Delta t) = 2\Delta f\sum_{j=0}^{N} \frac{</span>
+<span class="sd">                                      \tilde{d}_{j}^{*}\tilde{h}_{j}^{0}}</span>
+<span class="sd">                                      {S_{j}} \exp(-2\pi \frac{ijk}{N}</span>
+
+<span class="sd">    Using a FFT, this expression can be evaluated efficiently for all :math:</span>
+<span class="sd">    `k`</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \left&lt;d|h\right&gt;(k\Delta t) = 2\Delta f FFT_{k} (\frac{dh}{S})</span>
+
+<span class="sd">    since :math:: `\left&lt;h|d\right&gt; = \left&lt;d|h\right&gt;^{*}`,</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \left&lt;d|h\right&gt; + \left&lt;h|d\right&gt; = 4\Delta f FFT_{k} (\frac{dh}{S})</span>
+
+<span class="sd">    and so the likelihood marginalised over time is simply</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \log{L} = \log\left(\int_{0}^{T} np.exp(\np.log(L) p(t))\right)</span>
+
+<span class="sd">    where p(t) is the prior. If we assume a flat prior then,</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \log{L} = \log\left(\int_{0}^{T} np.exp(\np.log(L))\right)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    time_marginalization : bool, optional</span>
+<span class="sd">        A Boolean operator which determines if the likelihood is marginalized</span>
+<span class="sd">        over time</span>
+<span class="sd">    phase_marginalization : bool, optional</span>
+<span class="sd">        A Boolean operator which determines if the likelihood is marginalized</span>
+<span class="sd">        over phase</span>
+<span class="sd">    distance_marginalization : bool, optional</span>
+<span class="sd">        A Boolean operator which determines if the likelihood is marginalized</span>
+<span class="sd">        over distance</span>
+<span class="sd">    marg_prior : list, optional</span>
+<span class="sd">        An instance of pycbc.distributions which returns a list of prior</span>
+<span class="sd">        distributions to be used when marginalizing the likelihood</span>
+<span class="sd">    **kwargs :</span>
+<span class="sd">        All other keyword arguments are passed to ``GaussianNoise``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;marginalized_gaussian_noise&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable_params</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">waveform_generator</span><span class="p">,</span>
+                 <span class="n">f_lower</span><span class="p">,</span> <span class="n">psds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">f_upper</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">time_marginalization</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">distance_marginalization</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">phase_marginalization</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">marg_prior</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MarginalizedGaussianNoise</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">variable_params</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
+                                                        <span class="n">waveform_generator</span><span class="p">,</span>
+                                                        <span class="n">f_lower</span><span class="p">,</span> <span class="n">psds</span><span class="p">,</span> <span class="n">f_upper</span><span class="p">,</span>
+                                                        <span class="n">norm</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_margtime</span> <span class="o">=</span> <span class="n">time_marginalization</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_margdist</span> <span class="o">=</span> <span class="n">distance_marginalization</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_margphase</span> <span class="o">=</span> <span class="n">phase_marginalization</span>
+        <span class="c1"># dictionary containing possible techniques to evalulate the log</span>
+        <span class="c1"># likelihood ratio.</span>
+        <span class="n">loglr_poss</span> <span class="o">=</span> <span class="p">{(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">_margtimephasedist_loglr</span><span class="p">,</span>
+                      <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">_margtimedist_loglr</span><span class="p">,</span>
+                      <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">_margtimephase_loglr</span><span class="p">,</span>
+                      <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">_margdistphase_loglr</span><span class="p">,</span>
+                      <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">_margdist_loglr</span><span class="p">,</span>
+                      <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">_margtime_loglr</span><span class="p">,</span>
+                      <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">_margphase_loglr</span><span class="p">}</span>
+        <span class="c1"># dictionary containing two techniques to calculate the matched</span>
+        <span class="c1"># filter SNR depending on whether time has been marginalised over or</span>
+        <span class="c1"># not.</span>
+        <span class="n">mfsnr_poss</span> <span class="o">=</span> <span class="p">{(</span><span class="mi">1</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">_margtime_mfsnr</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mfsnr</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_margdist</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_margphase</span><span class="p">),</span>
+                      <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_margtime</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;This class requires that you marginalize &quot;</span>
+                                 <span class="s2">&quot;over at least one parameter. You have not &quot;</span>
+                                 <span class="s2">&quot;marginalized over any.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_eval_loglr</span> <span class="o">=</span> <span class="n">loglr_poss</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_eval_mfsnr</span> <span class="o">=</span> <span class="n">mfsnr_poss</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="n">marg_prior</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;No priors are specified for the &quot;</span>
+                                 <span class="s2">&quot;marginalization. This is needed to &quot;</span>
+                                 <span class="s2">&quot;calculated the marginalized likelihood&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_marg_prior</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">marg_prior</span><span class="p">],</span>
+                                    <span class="n">marg_prior</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_setup_prior</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_extra_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds ``loglr``, ``optimal_snrsq`` and matched filter snrsq in each</span>
+<span class="sd">        detector to the default stats.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;loglr&#39;</span><span class="p">]</span> <span class="o">+</span> \
+               <span class="p">[</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_optimal_snrsq&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">det</span><span class="p">)</span> <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">]</span> <span class="o">+</span> \
+               <span class="p">[</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_matchedfilter_snrsq&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">det</span><span class="p">)</span> <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">]</span>
+
+<div class="viewcode-block" id="MarginalizedGaussianNoise.from_config"><a class="viewcode-back" href="../../../../pycbc.inference.models.html#pycbc.inference.models.marginalized_gaussian_noise.MarginalizedGaussianNoise.from_config">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cp</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">delta_f</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">delta_t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">gates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">recalibration</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes an instance of this class from the given config file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cp : WorkflowConfigParser</span>
+<span class="sd">            Config file parser to read.</span>
+<span class="sd">        data : dict</span>
+<span class="sd">            A dictionary of data, in which the keys are the detector names and</span>
+<span class="sd">            the values are the data. This is not retrieved from the config</span>
+<span class="sd">            file, and so must be provided.</span>
+<span class="sd">        delta_f : float</span>
+<span class="sd">            The frequency spacing of the data; needed for waveform generation.</span>
+<span class="sd">        delta_t : float</span>
+<span class="sd">            The time spacing of the data; needed for time-domain waveform</span>
+<span class="sd">            generators.</span>
+<span class="sd">        recalibration : dict of pycbc.calibration.Recalibrate, optional</span>
+<span class="sd">            Dictionary of detectors -&gt; recalibration class instances for</span>
+<span class="sd">            recalibrating data.</span>
+<span class="sd">        gates : dict of tuples, optional</span>
+<span class="sd">            Dictionary of detectors -&gt; tuples of specifying gate times. The</span>
+<span class="sd">            sort of thing returned by `pycbc.gate.gates_from_cli`.</span>
+<span class="sd">        \**kwargs :</span>
+<span class="sd">            All additional keyword arguments are passed to the class. Any</span>
+<span class="sd">            provided keyword will over ride what is in the config file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">prior_section</span> <span class="o">=</span> <span class="s2">&quot;marginalized_prior&quot;</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_init_args_from_config</span><span class="p">(</span><span class="n">cp</span><span class="p">)</span>
+        <span class="n">marg_prior</span> <span class="o">=</span> <span class="n">read_distributions_from_config</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="n">prior_section</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">marg_prior</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;No priors are specified for the &quot;</span>
+                                 <span class="s2">&quot;marginalization. Please specify this in a &quot;</span>
+                                 <span class="s2">&quot;section in the config file with heading &quot;</span>
+                                 <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">-variable&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prior_section</span><span class="p">))</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">marg_prior</span><span class="p">]</span>
+        <span class="n">marg_args</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="s2">&quot;_marginalization&quot;</span> <span class="ow">in</span> <span class="n">k</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">marg_args</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;There is not a prior for each keyword argument&quot;</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;marg_prior&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">marg_prior</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="s2">&quot;_marginalization&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">variable_params</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;variable_params&#39;</span><span class="p">]</span>
+        <span class="n">args</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">static_params</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;static_params&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">static_params</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># set up waveform generator</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">approximant</span> <span class="o">=</span> <span class="n">static_params</span><span class="p">[</span><span class="s1">&#39;approximant&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;no approximant provided in the static args&quot;</span><span class="p">)</span>
+        <span class="n">generator_function</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">select_waveform_generator</span><span class="p">(</span><span class="n">approximant</span><span class="p">)</span>
+        <span class="n">waveform_generator</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">FDomainDetFrameGenerator</span><span class="p">(</span>
+            <span class="n">generator_function</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span>
+            <span class="n">variable_args</span><span class="o">=</span><span class="n">variable_params</span><span class="p">,</span> <span class="n">detectors</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+            <span class="n">delta_f</span><span class="o">=</span><span class="n">delta_f</span><span class="p">,</span> <span class="n">delta_t</span><span class="o">=</span><span class="n">delta_t</span><span class="p">,</span>
+            <span class="n">recalib</span><span class="o">=</span><span class="n">recalibration</span><span class="p">,</span> <span class="n">gates</span><span class="o">=</span><span class="n">gates</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">static_params</span><span class="p">)</span>
+        <span class="n">args</span><span class="p">[</span><span class="s1">&#39;waveform_generator&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">waveform_generator</span>
+        <span class="n">args</span><span class="p">[</span><span class="s2">&quot;f_lower&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">static_params</span><span class="p">[</span><span class="s2">&quot;f_lower&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_setup_prior</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets up the prior for time and/or distance and/or phase which is</span>
+<span class="sd">        used for the likelihood marginalization.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_marg_prior</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;A prior must be specified for the parameters &quot;</span>
+                             <span class="s2">&quot;that you wish to marginalize the likelihood &quot;</span>
+                             <span class="s2">&quot;over&quot;</span><span class="p">)</span>
+        <span class="n">marg_number</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_marg_prior</span><span class="p">)</span> <span class="o">!=</span> <span class="n">marg_number</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;There is not a prior for each keyword &quot;</span>
+                                 <span class="s2">&quot;argument&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_margdist</span><span class="p">:</span>
+            <span class="n">bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_marg_prior</span><span class="p">[</span><span class="s2">&quot;distance&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">bounds</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dist_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="s2">&quot;distance&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">,</span>
+                                              <span class="n">bounds</span><span class="p">[</span><span class="s2">&quot;distance&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_deltad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dist_array</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dist_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dist_prior</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                                  <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_marg_prior</span><span class="p">[</span><span class="s2">&quot;distance&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">distance</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+                                   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dist_array</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_margtime</span><span class="p">:</span>
+            <span class="n">bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_marg_prior</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">bounds</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_time_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">,</span>
+                                              <span class="n">bounds</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time_prior</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                                  <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_marg_prior</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span>
+                                   <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time_array</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_margphase</span><span class="p">:</span>
+            <span class="n">bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_marg_prior</span><span class="p">[</span><span class="s2">&quot;phase&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">bounds</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_phase_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="s2">&quot;phase&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">,</span>
+                                               <span class="n">bounds</span><span class="p">[</span><span class="s2">&quot;phase&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_deltap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_phase_array</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_phase_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">phase_prior</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                                   <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_marg_prior</span><span class="p">[</span><span class="s2">&quot;phase&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">phase</span><span class="o">=</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span>
+                                    <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_phase_array</span><span class="p">])</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_margtime_mfsnr</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a time series for the matched filter SNR assuming that the</span>
+<span class="sd">        template and data have both been normalised and whitened.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">snr</span> <span class="o">=</span> <span class="n">matched_filter_core</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">h_norm</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">psd</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">hd_i</span> <span class="o">=</span> <span class="n">snr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">real</span>
+        <span class="k">return</span> <span class="n">hd_i</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_mfsnr</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the matched filter SNR assuming that the template and data</span>
+<span class="sd">        have both been normalised and whitened.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hd_i</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">hd_i</span>
+
+    <span class="k">def</span> <span class="nf">_margtimephasedist_loglr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mf_snr</span><span class="p">,</span> <span class="n">opt_snr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the log likelihood ratio marginalized over time, phase and</span>
+<span class="sd">        distance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logl</span> <span class="o">=</span> <span class="n">special</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">special</span><span class="o">.</span><span class="n">i0</span><span class="p">(</span><span class="n">mf_snr</span><span class="p">)),</span>
+                                 <span class="n">b</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_deltat</span><span class="p">)</span>
+        <span class="n">logl_marg</span> <span class="o">=</span> <span class="n">logl</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_dist_array</span>
+        <span class="n">opt_snr_marg</span> <span class="o">=</span> <span class="n">opt_snr</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_dist_array</span><span class="o">**</span><span class="mi">2</span>
+        <span class="k">return</span> <span class="n">special</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="n">logl_marg</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">opt_snr_marg</span><span class="p">,</span>
+                                 <span class="n">b</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_deltad</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_prior</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_margtimedist_loglr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mf_snr</span><span class="p">,</span> <span class="n">opt_snr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the log likelihood ratio marginalized over time and</span>
+<span class="sd">        distance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logl</span> <span class="o">=</span> <span class="n">special</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="n">mf_snr</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_deltat</span><span class="p">)</span>
+        <span class="n">logl_marg</span> <span class="o">=</span> <span class="n">logl</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_dist_array</span>
+        <span class="n">opt_snr_marg</span> <span class="o">=</span> <span class="n">opt_snr</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_dist_array</span><span class="o">**</span><span class="mi">2</span>
+        <span class="k">return</span> <span class="n">special</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="n">logl_marg</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">opt_snr_marg</span><span class="p">,</span>
+                                 <span class="n">b</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_deltad</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_prior</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_margtimephase_loglr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mf_snr</span><span class="p">,</span> <span class="n">opt_snr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the log likelihood ratio marginalized over time and phase.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">special</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">special</span><span class="o">.</span><span class="n">i0</span><span class="p">(</span><span class="n">mf_snr</span><span class="p">)),</span>
+                                 <span class="n">b</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_deltat</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">opt_snr</span>
+
+    <span class="k">def</span> <span class="nf">_margdistphase_loglr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mf_snr</span><span class="p">,</span> <span class="n">opt_snr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the log likelihood ratio marginalized over distance and</span>
+<span class="sd">        phase.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logl</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">special</span><span class="o">.</span><span class="n">i0</span><span class="p">(</span><span class="n">mf_snr</span><span class="p">))</span>
+        <span class="n">logl_marg</span> <span class="o">=</span> <span class="n">logl</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_dist_array</span>
+        <span class="n">opt_snr_marg</span> <span class="o">=</span> <span class="n">opt_snr</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_dist_array</span><span class="o">**</span><span class="mi">2</span>
+        <span class="k">return</span> <span class="n">special</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="n">logl_marg</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">opt_snr_marg</span><span class="p">,</span>
+                                 <span class="n">b</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_deltad</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_prior</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_margdist_loglr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mf_snr</span><span class="p">,</span> <span class="n">opt_snr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the log likelihood ratio marginalized over distance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mf_snr_marg</span> <span class="o">=</span> <span class="n">mf_snr</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_dist_array</span>
+        <span class="n">opt_snr_marg</span> <span class="o">=</span> <span class="n">opt_snr</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_dist_array</span><span class="o">**</span><span class="mi">2</span>
+        <span class="k">return</span> <span class="n">special</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="n">mf_snr_marg</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">opt_snr_marg</span><span class="p">,</span>
+                                 <span class="n">b</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_deltad</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_prior</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_margtime_loglr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mf_snr</span><span class="p">,</span> <span class="n">opt_snr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the log likelihood ratio marginalized over time.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">special</span><span class="o">.</span><span class="n">logsumexp</span><span class="p">(</span><span class="n">mf_snr</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_deltat</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">opt_snr</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_margphase_loglr</span><span class="p">(</span><span class="n">mf_snr</span><span class="p">,</span> <span class="n">opt_snr</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the log likelihood ratio marginalized over phase.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">special</span><span class="o">.</span><span class="n">i0</span><span class="p">(</span><span class="n">mf_snr</span><span class="p">))</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">opt_snr</span>
+
+    <span class="k">def</span> <span class="nf">_loglr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Computes the log likelihood ratio,</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \log \mathcal{L}(\Theta) = \sum_i</span>
+<span class="sd">                \left&lt;h_i(\Theta)|d_i\right&gt; -</span>
+<span class="sd">                \frac{1}{2}\left&lt;h_i(\Theta)|h_i(\Theta)\right&gt;,</span>
+
+<span class="sd">        at the current parameter values :math:`\Theta`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            The value of the log likelihood ratio evaluated at the given point.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_params</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">wfs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_waveform_generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">NoWaveformError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nowaveform_loglr</span><span class="p">()</span>
+        <span class="n">opt_snr</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="n">mf_snr</span> <span class="o">=</span> <span class="mi">0</span><span class="n">j</span>
+        <span class="k">for</span> <span class="n">det</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">wfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># the kmax of the waveforms may be different than internal kmax</span>
+            <span class="n">kmax</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">h</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kmax</span><span class="p">[</span><span class="n">det</span><span class="p">])</span>
+            <span class="c1"># time step</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_deltat</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">delta_t</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kmin</span><span class="p">[</span><span class="n">det</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">kmax</span><span class="p">:</span>
+                <span class="c1"># if the waveform terminates before the filtering low</span>
+                <span class="c1"># frequency cutoff, then the loglr is just 0 for this</span>
+                <span class="c1"># detector</span>
+                <span class="n">hh_i</span> <span class="o">=</span> <span class="mf">0.</span>
+                <span class="n">hd_i</span> <span class="o">=</span> <span class="mi">0</span><span class="n">j</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">h</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_kmin</span><span class="p">[</span><span class="n">det</span><span class="p">]:</span><span class="n">kmax</span><span class="p">]</span> <span class="o">*=</span> \
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_weight</span><span class="p">[</span><span class="n">det</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_kmin</span><span class="p">[</span><span class="n">det</span><span class="p">]:</span><span class="n">kmax</span><span class="p">]</span>
+                <span class="n">hh_i</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_kmin</span><span class="p">[</span><span class="n">det</span><span class="p">]:</span><span class="n">kmax</span><span class="p">]</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span>
+                    <span class="n">h</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_kmin</span><span class="p">[</span><span class="n">det</span><span class="p">]:</span><span class="n">kmax</span><span class="p">])</span><span class="o">.</span><span class="n">real</span>
+                <span class="n">hd_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eval_mfsnr</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_kmin</span><span class="p">[</span><span class="n">det</span><span class="p">]:</span><span class="n">kmax</span><span class="p">],</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">det</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_kmin</span><span class="p">[</span><span class="n">det</span><span class="p">]:</span><span class="n">kmax</span><span class="p">])</span>
+            <span class="n">opt_snr</span> <span class="o">+=</span> <span class="n">hh_i</span>
+            <span class="n">mf_snr</span> <span class="o">+=</span> <span class="n">hd_i</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_stats</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_optimal_snrsq&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">det</span><span class="p">),</span> <span class="n">hh_i</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_stats</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_matchedfilter_snrsq&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">det</span><span class="p">),</span>
+                    <span class="n">hd_i</span><span class="p">)</span>
+        <span class="n">mf_snr</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">mf_snr</span><span class="p">)</span>
+        <span class="n">loglr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eval_loglr</span><span class="p">(</span><span class="n">mf_snr</span><span class="p">,</span> <span class="n">opt_snr</span><span class="p">)</span>
+        <span class="c1"># also store the loglikelihood, to ensure it is populated in the</span>
+        <span class="c1"># current stats even if loglikelihood is never called</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_stats</span><span class="o">.</span><span class="n">loglikelihood</span> <span class="o">=</span> <span class="n">loglr</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lognl</span>
+        <span class="k">return</span> <span class="n">loglr</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
+      <span class="lastupdated">
+        Last updated on Nov 08, 2019.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

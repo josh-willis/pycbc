@@ -34,7 +34,8 @@ cdef extern from "decompress_cpu_ccode.cpp":
                               double * amp,
                               double * phase,
                               const int64_t sflen,
-                              const int64_t imin)
+                              const int64_t imin,
+			      int64_t * isrecalc)
     void _decomp_ccode_float(float complex * h,
                              float delta_f,
                              const int64_t hlen,
@@ -43,7 +44,8 @@ cdef extern from "decompress_cpu_ccode.cpp":
                              float * amp,
                              float * phase,
                              const int64_t sflen,
-                             const int64_t imin)
+                             const int64_t imin,
+			     int64_t * isrecalc)
 
 # See simd_threshold_cython in events module for some guidance for how I
 # constructed this in this way
@@ -58,10 +60,11 @@ def decomp_ccode_double(numpy.ndarray[numpy.complex128_t, ndim=1, mode="c"] h no
                         numpy.ndarray[double, ndim=1, mode="c"] amp not None,
                         numpy.ndarray[double, ndim=1, mode="c"] phase not None,
                         int sflen,
-                        int imin):
+                        int imin,
+			numpy.ndarray[numpy.int64_t, ndim=1, mode="c"] isrecalc not None):
     _decomp_ccode_double(&h[0], delta_f, hlen, start_index,
                          &sample_frequencies[0], &amp[0], &phase[0],
-                         sflen, imin)
+                         sflen, imin, &isrecalc[0])
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
@@ -73,8 +76,9 @@ def decomp_ccode_float(numpy.ndarray[numpy.complex64_t, ndim=1, mode="c"] h not 
                        numpy.ndarray[float, ndim=1, mode="c"] amp not None,
                        numpy.ndarray[float, ndim=1, mode="c"] phase not None,
                        int sflen,
-                       int imin):
+                       int imin,
+		       numpy.ndarray[numpy.int64_t, ndim=1, mode="c"] isrecalc not None):
     _decomp_ccode_float(&h[0], delta_f, hlen, start_index,
                         &sample_frequencies[0], &amp[0], &phase[0],
-                        sflen, imin)
+                        sflen, imin, &isrecalc[0])
 

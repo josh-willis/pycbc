@@ -58,7 +58,8 @@ void _decomp_ccode_double(std::complex<double> * h,
                           double * amp,
                           double * phase,
                           const int64_t sflen,
-                          const int64_t imin)
+                          const int64_t imin,
+                          uint32_t *isrecalc)
 {
     double* outptr = (double*) h;
 
@@ -87,10 +88,12 @@ void _decomp_ccode_double(std::complex<double> * h,
 
     // zero out the beginning
     memset(outptr, 0, sizeof(*outptr)*2*start_index);
+    memset(isrecalc, 0, sizeof(isrecalc)*start_index);
 
     // move to the start position
     outptr += 2*start_index;
     findex = start_index;
+    int64_t j = start_index;
 
     // cycle over the compressed samples
     for (int ii=imin; ii<(sflen-1); ii++){
@@ -130,6 +133,8 @@ void _decomp_ccode_double(std::complex<double> * h,
             *(outptr+1) = h_im;
             outptr += 2;
             findex++;
+	    isrecalc[j] = 1;
+	    j++;
 
             // for the next update_interval steps, compute h by incrementing
             // the last h
@@ -151,6 +156,8 @@ void _decomp_ccode_double(std::complex<double> * h,
                 *(outptr+1) = h_im;
                 outptr += 2;
                 findex++;
+		isrecalc[j] = 0;
+		j++
             }
         }
         if (next_sfindex == hlen){
@@ -160,6 +167,7 @@ void _decomp_ccode_double(std::complex<double> * h,
 
     // zero out the rest of the array
     memset(outptr, 0, sizeof(*outptr)*2*(hlen-findex));
+    memset(&(isrecalc[j]), 0, sizeof(*isrecalc)*(hlen-findex));
 }
 
 /* I'm just copying this wholesale for float precision. If someone wants to
@@ -175,7 +183,8 @@ void _decomp_ccode_float(std::complex<float> * h,
                         float * amp,
                         float * phase,
                         const int64_t sflen,
-                        const int64_t imin)
+			const int64_t imin,
+			uint32_t *isrecalc)
 {
     float* outptr = (float*) h;
 
@@ -204,10 +213,12 @@ void _decomp_ccode_float(std::complex<float> * h,
 
     // zero out the beginning
     memset(outptr, 0, sizeof(*outptr)*2*start_index);
+    memset(isrecalc, 0, sizeof(isrecalc)*start_index);
 
     // move to the start position
     outptr += 2*start_index;
     findex = start_index;
+    int64_t j = start_index;
 
     // cycle over the compressed samples
     for (int ii=imin; ii<(sflen-1); ii++){
@@ -246,6 +257,8 @@ void _decomp_ccode_float(std::complex<float> * h,
             *outptr = h_re;
             *(outptr+1) = h_im;
             outptr += 2;
+	    isrecalc[j] = 1;
+	    j++;
             findex++;
 
             // for the next update_interval steps, compute h by incrementing
@@ -268,6 +281,8 @@ void _decomp_ccode_float(std::complex<float> * h,
                 *(outptr+1) = h_im;
                 outptr += 2;
                 findex++;
+		isrecalc[j] = 0;
+		j++
             }
         }
         if (next_sfindex == hlen){
@@ -277,5 +292,6 @@ void _decomp_ccode_float(std::complex<float> * h,
 
     // zero out the rest of the array
     memset(outptr, 0, sizeof(*outptr)*2*(hlen-findex));
+    memset(&(isrecalc[j]), 0, sizeof(*isrecalc)*(hlen-findex));
 }
 

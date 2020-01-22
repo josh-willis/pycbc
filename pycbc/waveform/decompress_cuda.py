@@ -27,6 +27,10 @@ from pycuda import gpuarray
 from pycuda.compiler import SourceModule
 import pycbc.scheme
 from pycbc.types import zeros
+import h5py
+from .utils import amplitude_from_frequencyseries, phase_from_frequencyseries
+
+import .debug as wfdebug
 
 # The interpolation is the result of the call of two kernels.
 #
@@ -331,4 +335,16 @@ def inline_linear_interp(amps, phases, freqs, output, df, flow, imin, start_inde
     fn1((1, 1), (nb, 1, 1), lower, upper, texlen, df, flow, fmax)
     fn2((nb, 1), (nt, 1, 1), g_out, df, hlen, flow, fmax, texlen, lower, upper)
     pycbc.scheme.mgr.state.context.synchronize()
+
+    if wfdebug.DEBUG_FILENAME is None:
+        raise RuntimeError("Debugging filename was not set")
+    fptr = h5py.File(wfdebug.DEBUG_FILENAME, "w")
+    fptr.create_dataset("interp_freqs", data=freqs)
+    fptr.create_dataset("interp_amp", data=amps)
+    fptr.create_dataset("interp_phase", data=phases)
+    fptr.create_dataset("freqs_all", data=output.sample_frequencies.numpy())
+    fptr.create_dataset("amp_all", data=amplitude_from_frequencyseries(output).numpy())
+    fptr.create_dataset("phase_all", data=phase_from_frequencyseries(output).numpy())
+    fptr.close()
+
     return output

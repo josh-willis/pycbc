@@ -30,8 +30,7 @@ from ..types import complex_same_precision_as
 from .decompress_cpu_cython import decomp_ccode_double, decomp_ccode_float
 import h5py
 from .utils import amplitude_from_frequencyseries, phase_from_frequencyseries
-
-CPU_DEBUG_FILENAME = None
+import .debug as wfdebug
 
 def inline_linear_interp(amp, phase, sample_frequencies, output,
                          df, f_lower, imin, start_index):
@@ -56,9 +55,9 @@ def inline_linear_interp(amp, phase, sample_frequencies, output,
         decomp_ccode_double(h, delta_f, hlen, start_index, sample_frequencies,
                             amp, phase, sflen, imin, isrecalc)
 
-    if CPU_DEBUG_FILENAME is None:
+    if wfdebug.DEBUG_FILENAME is None:
         raise RuntimeError("Debugging filename was not set")
-    fptr = h5py.File(CPU_OUTPUT_FILENAME, "w")
+    fptr = h5py.File(wfdebug.DEBUG_FILENAME, "w")
     fptr.create_dataset("interp_freqs", data=sample_frequencies)
     fptr.create_dataset("interp_amp", data=amp)
     fptr.create_dataset("interp_phase", data=phase)

@@ -29,6 +29,7 @@ import pycbc.version
 import pycbc.opt
 import pycbc.inject
 import time
+from pycbc.waveform import debug as wfdebug
 
 last_progress_update = -1.0
 
@@ -185,6 +186,8 @@ parser.add_argument("--use-compressed-waveforms", action="store_true", default=F
                     help='Use compressed waveforms from the bank file.')
 parser.add_argument("--waveform-decompression-method", action='store', default=None,
                     help='Method to be used decompress waveforms from the bank file.')
+parser.add_argument("--waveform-debug-file", type=str, default=None, action=store,
+                    help="Filename for storing debugging information for waveform decompression.")
 
 # Add options groups
 psd.insert_psd_option_group(parser)
@@ -216,6 +219,8 @@ gwstrain = strain.from_cli(opt, dyn_range_fac=DYN_RANGE_FAC,
 
 strain_segments = strain.StrainSegments.from_cli(opt, gwstrain)
 
+if opt.waveform_debug_file is not None:
+    wfdebug.DEBUG_FILENAME = opt.waveform_debug_file
 
 with ctx:
     # The following FFTW specific options needed to wait until
